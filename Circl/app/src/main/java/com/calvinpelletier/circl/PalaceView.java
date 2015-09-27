@@ -9,9 +9,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-
+// The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
+    // A bunch of constants for drawing nodes and connections
     private final int FILL_COLOR = Color.rgb(0,49,94);
     private final float STROKE_WIDTH = 5.f;
 
@@ -19,9 +20,11 @@ public class PalaceView extends View {
     private final Paint nodePaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint connectionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    // Used for managing zoom
     private ScaleGestureDetector mScaleDetector;
     private float mScaleFactor = 1.f;
 
+    // Used for managing panning
     PVGestureController gestureController;
 
     public PalaceView(Context context)
@@ -67,7 +70,6 @@ public class PalaceView extends View {
         canvas.restore();
     }
 
-    // r should be somewhere in between 50 and 100 for now.
     private void drawNode(Canvas canvas,Node n)
     {
         canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaintFill);
@@ -115,6 +117,7 @@ public class PalaceView extends View {
     }
 
     // http://stackoverflow.com/questions/5216658/pinch-zoom-for-custom-view
+    // this facilitates scaling the canvas when a user "pinches"
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {

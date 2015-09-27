@@ -2,9 +2,7 @@ package com.calvinpelletier.circl;
 
 import android.view.MotionEvent;
 
-/**
- * Created by wilson on 9/26/15.
- */
+// Manages user panning in PalaceView.java
 public class PVGestureController {
 
     private int width, height;
