@@ -4,6 +4,13 @@
     tools:context=".MainActivity"
     android:id="@+id/mainLayout"
     android:padding="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/pvContainer"></RelativeLayout>
+
     <View
         android:background="@drawable/hamburger_menu"
         android:layout_width="40dp"
@@ -13,4 +20,5 @@
         android:layout_margin="10dp">
 
     </View>
+
 </RelativeLayout>

@@ -32,7 +32,17 @@ public class Node {
         this.position.y = y;
     }
 
+    public int getOutline()
+    {
+        return this.outlineColor;
+    }
+
     public void setOutline(int newColor) {
         this.outlineColor = newColor;
+    }
+
+    public int getRadius()
+    {
+        return this.radius;
     }
 }

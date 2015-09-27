@@ -1,7 +1,6 @@
 package com.calvinpelletier.circl;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,16 +23,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         final RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
+        final RelativeLayout pvContainer = (RelativeLayout)findViewById(R.id.pvContainer);
+        PalaceView p = new PalaceView(this);
+
+        pvContainer.addView(p);
+
 
         View hamburger = findViewById(R.id.hamburgerMenu);
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
                 LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View view;
                 final View fadeView = createFadeView();
