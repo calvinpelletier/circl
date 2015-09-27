@@ -9,6 +9,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+
+import java.util.ArrayList;
+
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
@@ -27,6 +30,9 @@ public class PalaceView extends View {
     // Used for managing panning
     PVGestureController gestureController;
 
+    //temporary storage for nodes
+    public ArrayList<Node> nodeArray = new ArrayList<Node>();
+
     public PalaceView(Context context)
     {
         super(context);
@@ -41,7 +47,16 @@ public class PalaceView extends View {
 
         nodePaintStroke.setStyle(Paint.Style.STROKE);
         nodePaintStroke.setStrokeWidth(STROKE_WIDTH);
+
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < nodeArray.size())
+            }
+        });
     }
+
+
 
     private Canvas canvas;
 
@@ -57,8 +72,12 @@ public class PalaceView extends View {
         Node n2 = new Node(new Coord(490,120), Color.GREEN);
         Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
         Node n4 = new Node(new Coord(200,300), Color.RED);
+        nodeArray.add(n1);
+        nodeArray.add(n2);
+        nodeArray.add(n3);
+        nodeArray.add(n4);
 
-        drawNode(canvas,n1);
+        drawNode(canvas, n1);
         drawNode(canvas,n2);
         drawNode(canvas,n3);
         drawNode(canvas,n4);
@@ -109,7 +128,7 @@ public class PalaceView extends View {
 
     public boolean onTouchEvent(MotionEvent ev)
     {
-        gestureController.onTouchEvent(ev);
+        gestureController.onTouchEvent(ev, nodeArray);
         mScaleDetector.onTouchEvent(ev);
         invalidate();
 

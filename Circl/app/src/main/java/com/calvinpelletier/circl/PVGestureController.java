@@ -2,6 +2,8 @@ package com.calvinpelletier.circl;
 
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 // Manages user panning in PalaceView.java
 public class PVGestureController {
 
@@ -16,17 +18,24 @@ public class PVGestureController {
     private float previousTranslateX = 0f;
     private float previousTranslateY = 0f;
 
+    private Node tappedNode = null;
+
     public PVGestureController(int width, int height)
     {
         this.width = width;
         this.height = height;
     }
 
-    public void onTouchEvent(MotionEvent ev)
+    public void onTouchEvent(MotionEvent ev, ArrayList<Node> nodeArray)
     {
         switch(ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
+                for (int i = 0; i < nodeArray.size(); i++) {
+                    if (distance(nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < nodeArray.get(i).getRadius()) {
+                        tappedNode = nodeArray.get(i);
+                    }
+                }
                 startX = ev.getX()-previousTranslateX;
                 startY = ev.getY()-previousTranslateY;
                 translateX = ev.getX()-startX;
@@ -37,6 +46,15 @@ public class PVGestureController {
                 translateY = constrainY(ev.getY()-startY);
                 break;
             case MotionEvent.ACTION_UP:
+                for (int i = 0; i < nodeArray.size(); i++) {
+                    if (distance(nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < nodeArray.get(i).getRadius()) {
+                        if (nodeArray.get(i) == tappedNode) {
+                            //node has been tapped
+                        }
+                    }
+                }
+                tappedNode = null;
+
                 previousTranslateX = translateX;
                 previousTranslateY = translateY;
                 break;
@@ -64,5 +82,9 @@ public class PVGestureController {
     public float getTranslateY()
     {
         return translateY;
+    }
+
+    private double distance(Coord coord1, Coord coord2) {
+        return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y + coord2.y, 2));
     }
 }

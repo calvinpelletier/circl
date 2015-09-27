@@ -13,6 +13,7 @@ public class Node {
     private int outlineColor = Color.BLACK;
     private Coord position;
     private final int radius = 50;
+    private boolean hasBeenTapped = false;
 
     public Node(Coord position, int outlineColor) {
         this.position = position;
@@ -44,5 +45,16 @@ public class Node {
     public int getRadius()
     {
         return this.radius;
+    }
+
+    void OnMouseDown() {
+        this.hasBeenTapped = true;
+    }
+
+    void OnMouseUp() {
+        if (this.hasBeenTapped) {
+
+        }
+        this.hasBeenTapped = false;
     }
 }
