@@ -4,12 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-
 import java.util.ArrayList;
 
 // The overarching view that will use a Canvas to display the "mind palace"
@@ -51,7 +48,6 @@ public class PalaceView extends View {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (int i = 0; i < nodeArray.size())
             }
         });
     }
@@ -99,10 +95,10 @@ public class PalaceView extends View {
 
     private void drawConnection(Canvas canvas,Node n1,Node n2)
     {
-        int x1 = n1.getPosition().x;
-        int y1 = n1.getPosition().y;
-        int x2 = n2.getPosition().x;
-        int y2 = n2.getPosition().y;
+        float x1 = n1.getPosition().x;
+        float y1 = n1.getPosition().y;
+        float x2 = n2.getPosition().x;
+        float y2 = n2.getPosition().y;
 
         int r1 = n1.getRadius();
         int r2 = n2.getRadius();
