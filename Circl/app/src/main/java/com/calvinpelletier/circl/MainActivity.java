@@ -1,9 +1,11 @@
 package com.calvinpelletier.circl;
 
+import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +14,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PalaceView p = new PalaceView(this);
+
+        RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
+        mainLayout.addView(p);
     }
 
     @Override
