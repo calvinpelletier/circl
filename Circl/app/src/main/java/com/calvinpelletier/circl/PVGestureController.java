@@ -31,8 +31,10 @@ public class PVGestureController {
         switch(ev.getAction())
         {
             case MotionEvent.ACTION_DOWN:
+                System.out.println("eyyyyy");
                 for (int i = 0; i < nodeArray.size(); i++) {
                     if (distance(nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < nodeArray.get(i).getRadius()) {
+                        System.out.println("check1");
                         tappedNode = nodeArray.get(i);
                     }
                 }
@@ -49,7 +51,7 @@ public class PVGestureController {
                 for (int i = 0; i < nodeArray.size(); i++) {
                     if (distance(nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < nodeArray.get(i).getRadius()) {
                         if (nodeArray.get(i) == tappedNode) {
-                            //node has been tapped
+                            System.out.println("check2");
                         }
                     }
                 }

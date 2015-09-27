@@ -53,7 +53,7 @@ public class Node {
 
     void OnMouseUp() {
         if (this.hasBeenTapped) {
-
+            System.out.println("test");
         }
         this.hasBeenTapped = false;
     }
