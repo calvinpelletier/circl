@@ -23,16 +23,16 @@ public class Node {
         return this.position;
     }
 
-    public setPosition(Coord newPosition) {
+    public void setPosition(Coord newPosition) {
         this.position = newPosition;
     }
 
-    public setPosition(int x, int y) {
+    public void setPosition(int x, int y) {
         this.position.x = x;
         this.position.y = y;
     }
 
-    public setOutline(int newColor) {
+    public void setOutline(int newColor) {
         this.outlineColor = newColor;
     }
 }
