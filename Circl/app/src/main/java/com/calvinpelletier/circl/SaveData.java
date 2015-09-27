@@ -22,8 +22,8 @@ public class SaveData {
     private FileInputStream fis;
     private ObjectInputStream ois;
 
-    public SaveData() {
-        this.ctx = null;
+    public SaveData(Context ctx) {
+        this.ctx = ctx;
         this.filename = "test";
         this.fos = null;
         this.oos = null;
@@ -32,26 +32,20 @@ public class SaveData {
     }
 
     public void saveNode(Node node) throws FileNotFoundException, IOException {
-        try {
-            this.fos = this.ctx.openFileOutput(this.filename, this.ctx.MODE_PRIVATE);
-            this.oos = new ObjectOutputStream(this.fos);
-            this.oos.writeObject(node);
-            oos.close();
-            this.fos.close();
-        }
-    }
-
-    public void loadNode(Node node) throws FileNotFoundException, StreamCorruptedException, IOException, ClassNotFoundException{
-        try {
-            this.fis = this.ctx.openFileInput(this.filename);
-            this.ois = new ObjectInputStream(this.fis);
-            Node restart = (Node) this.ois.readObject();
-            this.ois.close();
-            this.fis.close();
-        }
+        this.fos = this.ctx.openFileOutput(this.filename, this.ctx.MODE_PRIVATE);
+        this.oos = new ObjectOutputStream(this.fos);
+        this.oos.writeObject(node);
+        this.oos.close();
+        this.fos.close();
 
     }
 
-
-
+    public Node loadNode() throws FileNotFoundException, StreamCorruptedException, IOException, ClassNotFoundException {
+        this.fis = this.ctx.openFileInput(this.filename);
+        this.ois = new ObjectInputStream(this.fis);
+        Node restart = (Node) this.ois.readObject();
+        this.ois.close();
+        this.fis.close();
+        return restart;
+    }
 }

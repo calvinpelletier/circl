@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Calvin Pelletier on 9/26/15.
  */
-public class Node {
+public class Node implements java.io.Serializable {
 
     private ArrayList<Connection> connectionArray = new ArrayList<Connection>();
     private int outlineColor = Color.BLACK;
