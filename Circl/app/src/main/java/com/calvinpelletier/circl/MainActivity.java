@@ -1,5 +1,7 @@
 package com.calvinpelletier.circl;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,13 +30,29 @@ public class MainActivity extends ActionBarActivity {
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
                 LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view;
+                final View view;
+                final View fadeView = createFadeView();
                 /* We inflate the xml which gives us a view */
                 view = mInflater.inflate(R.layout.overlay_menu,null, false);
 
-                // mainLayout.addView(createFadeView());
-                // mainLayout.addView(view);
+                mainLayout.addView(fadeView);
+                mainLayout.addView(view);
+
+                Button closeButton = (Button)view.findViewById(R.id.buttonX);
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mainLayout.removeView(view);
+                        mainLayout.removeView(fadeView);
+                    }
+                });
+
+
 
             }
         });
@@ -42,10 +61,11 @@ public class MainActivity extends ActionBarActivity {
     private View createFadeView()
     {
         View view = new View(this);
-        view.setBackgroundColor(Color.argb(128,0,0,0));
+        view.setBackgroundColor(Color.argb(196, 0, 0, 0));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.setMargins(0,0,0,0);
+
         view.setLayoutParams(params);
+
         return view;
     }
 
