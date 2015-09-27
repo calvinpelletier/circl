@@ -1,6 +1,5 @@
 package com.calvinpelletier.circl;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -15,14 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 
-
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         final RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
         final RelativeLayout pvContainer = (RelativeLayout)findViewById(R.id.pvContainer);
