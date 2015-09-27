@@ -12,6 +12,13 @@ import android.view.View;
 
 public class PalaceView extends View {
 
+    private final int FILL_COLOR = Color.rgb(0,49,94);
+    private final float STROKE_WIDTH = 5.f;
+
+    private final Paint nodePaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint nodePaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint connectionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
     private ScaleGestureDetector mScaleDetector;
     private float mScaleFactor = 1.f;
 
@@ -23,6 +30,14 @@ public class PalaceView extends View {
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         gestureController = new PVGestureController(400,400);
+
+        nodePaintFill.setColor(FILL_COLOR);
+
+        connectionPaint.setColor(FILL_COLOR);
+        connectionPaint.setStrokeWidth(STROKE_WIDTH);
+
+        nodePaintStroke.setStyle(Paint.Style.STROKE);
+        nodePaintStroke.setStrokeWidth(STROKE_WIDTH);
     }
 
     private Canvas canvas;
@@ -35,11 +50,6 @@ public class PalaceView extends View {
         canvas.scale(mScaleFactor, mScaleFactor);
         canvas.translate(gestureController.getTranslateX(), gestureController.getTranslateY());
 
-        // Just drawing a blue circle for the time being, so I can test panning and zooming
-        //Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        //p.setColor(Color.BLUE);
-        //canvas.drawCircle(50, 50, 200, p);
-
         Node n1 = new Node(new Coord(100,100), Color.YELLOW);
         Node n2 = new Node(new Coord(490,120), Color.GREEN);
         Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
@@ -50,8 +60,8 @@ public class PalaceView extends View {
         drawNode(canvas,n3);
         drawNode(canvas,n4);
 
-        drawConnection(canvas,n2,n3);
-        drawConnection(canvas,n1,n3);
+        drawConnection(canvas, n2, n3);
+        drawConnection(canvas, n1, n3);
         drawConnection(canvas,n1,n4);
 
         canvas.restore();
@@ -60,16 +70,10 @@ public class PalaceView extends View {
     // r should be somewhere in between 50 and 100 for now.
     private void drawNode(Canvas canvas,Node n)
     {
-        Paint nodePaint = new Paint();
-        nodePaint.setColor(Color.rgb(0,49,94));
-        canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaint);
+        canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaintFill);
 
-
-        nodePaint = new Paint();
-        nodePaint.setStyle(Paint.Style.STROKE);
-        nodePaint.setStrokeWidth(5.0f);
-        nodePaint.setColor(n.getOutline());
-        canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaint);
+        nodePaintStroke.setColor(n.getOutline());
+        canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaintStroke);
     }
 
     private void drawConnection(Canvas canvas,Node n1,Node n2)
@@ -98,18 +102,7 @@ public class PalaceView extends View {
         float realX2 = x2-kx*r2*(float)Math.cos(theta);
         float realY2 = y2-ky*r2*(float)Math.sin(theta);
 
-        Paint connectionPaint = new Paint();
-        connectionPaint.setColor(Color.rgb(0,49,94));
-        connectionPaint.setStrokeWidth(5.0f);
         canvas.drawLine(realX1,realY1,realX2,realY2,connectionPaint);
-
-        /*Paint dotPaint = new Paint();
-        dotPaint.setColor(Color.RED);
-        canvas.drawCircle(realX1,realY1,4,dotPaint);
-        canvas.drawCircle(realX2,realY2,4,dotPaint);*/
-
-
-
     }
 
     public boolean onTouchEvent(MotionEvent ev)
@@ -133,5 +126,4 @@ public class PalaceView extends View {
             return true;
         }
     }
-
 }
