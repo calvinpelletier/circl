@@ -50,6 +50,15 @@ public class PalaceView extends View {
             public void onClick(View view) {
             }
         });
+
+        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
+        Node n2 = new Node(new Coord(490,120), Color.GREEN);
+        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
+        Node n4 = new Node(new Coord(200,300), Color.RED);
+        nodeArray.add(n1);
+        nodeArray.add(n2);
+        nodeArray.add(n3);
+        nodeArray.add(n4);
     }
 
 
@@ -64,23 +73,13 @@ public class PalaceView extends View {
         canvas.scale(mScaleFactor, mScaleFactor);
         canvas.translate(gestureController.getTranslateX(), gestureController.getTranslateY());
 
-        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
-        Node n2 = new Node(new Coord(490,120), Color.GREEN);
-        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
-        Node n4 = new Node(new Coord(200,300), Color.RED);
-        nodeArray.add(n1);
-        nodeArray.add(n2);
-        nodeArray.add(n3);
-        nodeArray.add(n4);
+        for (int i = 0; i < nodeArray.size(); i++) {
+            drawNode(canvas, nodeArray.get(i));
+        }
 
-        drawNode(canvas, n1);
-        drawNode(canvas,n2);
-        drawNode(canvas,n3);
-        drawNode(canvas,n4);
-
-        drawConnection(canvas, n2, n3);
+        /*drawConnection(canvas, n2, n3);
         drawConnection(canvas, n1, n3);
-        drawConnection(canvas,n1,n4);
+        drawConnection(canvas,n1,n4);*/
 
         canvas.restore();
     }

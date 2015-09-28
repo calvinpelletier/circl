@@ -28,7 +28,7 @@ public class Node {
         this.position = newPosition;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
     }
