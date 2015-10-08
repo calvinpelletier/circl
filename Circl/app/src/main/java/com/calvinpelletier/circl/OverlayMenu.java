@@ -14,7 +14,8 @@ import android.widget.RelativeLayout;
 /**
  * Created by wilson on 9/27/15.
  */
-public class OverlayFader {
+public class OverlayMenu {
+
     public static void fadeIn(final Context context, final RelativeLayout container)
     {
         LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -37,6 +38,8 @@ public class OverlayFader {
                 fadeOut(context,container,fadeView);
             }
         });
+
+
     }
 
     private static void fadeIn(Context context, RelativeLayout container, final View view)
