@@ -10,11 +10,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 /**
  * Created by wilson on 9/27/15.
  */
 public class OverlayMenu {
+
+    private static Button bAddNode;
+    private static Button bAddConnection;
+    private static Button bClose;
 
     public static void fadeIn(final Context context, final RelativeLayout container)
     {
@@ -28,10 +33,10 @@ public class OverlayMenu {
         container.addView(view);
 
         fadeIn(context, container, view);
-        fadeIn(context,container,fadeView);
+        fadeIn(context, container, fadeView);
 
-        Button closeButton = (Button)view.findViewById(R.id.buttonX);
-        closeButton.setOnClickListener(new View.OnClickListener() {
+        bClose = (Button)view.findViewById(R.id.buttonX);
+        bClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fadeOut(context,container,view);
@@ -39,7 +44,25 @@ public class OverlayMenu {
             }
         });
 
+        bAddNode = (Button)view.findViewById(R.id.button);
+        bAddNode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(context,"Adding Node!",Toast.LENGTH_SHORT);
+                t.show();
+                fadeOut(context,container,view);
+                fadeOut(context,container,fadeView);
+            }
+        });
 
+        bAddConnection = (Button)view.findViewById(R.id.button2);
+        bAddConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(context,"Adding Connection!",Toast.LENGTH_SHORT);
+                t.show();
+            }
+        });
     }
 
     private static void fadeIn(Context context, RelativeLayout container, final View view)
