@@ -15,7 +15,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="New Button"
+        android:text="Add New Node"
         android:id="@+id/button"
         android:layout_below="@+id/buttonX"
         android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="New Button"
+        android:text="Add Connection"
         android:id="@+id/button2"
         android:layout_below="@+id/button"
         android:layout_centerHorizontal="true"
@@ -37,22 +37,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="New Button"
+        android:text="Something Else!"
         android:id="@+id/button3"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Some Filler Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="40dp" />
 
 </RelativeLayout>
