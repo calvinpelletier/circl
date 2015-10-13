@@ -1,9 +1,19 @@
 package com.calvinpelletier.circl;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,7 +22,25 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
+        final RelativeLayout pvContainer = (RelativeLayout)findViewById(R.id.pvContainer);
+        PalaceView p = new PalaceView(this);
+
+        pvContainer.addView(p);
+
+        final MainActivity m = this;
+
+
+        View hamburger = findViewById(R.id.hamburgerMenu);
+        hamburger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OverlayFader.fadeIn(m,mainLayout);
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

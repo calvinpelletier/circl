@@ -13,6 +13,7 @@ public class Node implements java.io.Serializable {
     private int outlineColor = Color.BLACK;
     private Coord position;
     private final int radius = 50;
+    private boolean hasBeenTapped = false;
 
     public Node(Coord position, int outlineColor) {
         this.position = position;
@@ -27,12 +28,33 @@ public class Node implements java.io.Serializable {
         this.position = newPosition;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
     }
 
+    public int getOutline()
+    {
+        return this.outlineColor;
+    }
+
     public void setOutline(int newColor) {
         this.outlineColor = newColor;
+    }
+
+    public int getRadius()
+    {
+        return this.radius;
+    }
+
+    void OnMouseDown() {
+        this.hasBeenTapped = true;
+    }
+
+    void OnMouseUp() {
+        if (this.hasBeenTapped) {
+            System.out.println("test");
+        }
+        this.hasBeenTapped = false;
     }
 }
