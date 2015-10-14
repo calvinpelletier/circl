@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -24,11 +25,18 @@ public class PalaceView extends View {
     private ScaleGestureDetector mScaleDetector;
     private float mScaleFactor = 1.f;
 
+    //coordinates of the viewport relative to the palace
+    private Coord viewportPos;
+
     // Used for managing panning
     PVGestureController gestureController;
 
     //temporary storage for nodes
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
+
+    //screen size
+    int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+    int screenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
 
     public PalaceView(Context context)
     {
@@ -36,6 +44,8 @@ public class PalaceView extends View {
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         gestureController = new PVGestureController(400,400);
+
+        viewportPos = new Coord(0.f, 0.f);
 
         nodePaintFill.setColor(FILL_COLOR);
 
@@ -124,6 +134,8 @@ public class PalaceView extends View {
     public boolean onTouchEvent(MotionEvent ev)
     {
         gestureController.onTouchEvent(ev, nodeArray);
+        viewportPos.x = gestureController.getTranslateX();
+        viewportPos.y = gestureController.getTranslateY();
         mScaleDetector.onTouchEvent(ev);
         invalidate();
 
@@ -142,5 +154,10 @@ public class PalaceView extends View {
 
             return true;
         }
+    }
+
+    public Coord viewportToPalaceCoord(Coord viewportCoord) {
+        Coord ret = new Coord((float)viewportCoord.x * mScaleFactor + viewportPos.x, (float)viewportCoord.y * mScaleFactor + viewportPos.y);
+        return ret;
     }
 }
