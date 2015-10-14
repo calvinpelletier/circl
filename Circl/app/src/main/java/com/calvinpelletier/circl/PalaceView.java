@@ -27,9 +27,14 @@ public class PalaceView extends View {
 
     //coordinates of the viewport relative to the palace
     private Coord viewportPos;
+    private Coord viewportStart;
+    private Coord viewportPosOld;
+
+    private int palaceWidth = 400;
+    private int palaceHeight = 400;
 
     // Used for managing panning
-    PVGestureController gestureController;
+    //PVGestureController gestureController;
 
     //temporary storage for nodes
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
@@ -43,9 +48,11 @@ public class PalaceView extends View {
         super(context);
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        gestureController = new PVGestureController(400,400);
+        //gestureController = new PVGestureController(400,400);
 
         viewportPos = new Coord(0.f, 0.f);
+        viewportStart = new Coord(0.f, 0.f);
+        viewportPosOld = new Coord(0.f, 0.f);
 
         nodePaintFill.setColor(FILL_COLOR);
 
@@ -81,7 +88,7 @@ public class PalaceView extends View {
 
         canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor);
-        canvas.translate(gestureController.getTranslateX(), gestureController.getTranslateY());
+        canvas.translate(viewportPos.x, viewportPos.y);
 
         for (int i = 0; i < nodeArray.size(); i++) {
             drawNode(canvas, nodeArray.get(i));
@@ -128,14 +135,44 @@ public class PalaceView extends View {
         float realX2 = x2-kx*r2*(float)Math.cos(theta);
         float realY2 = y2-ky*r2*(float)Math.sin(theta);
 
-        canvas.drawLine(realX1,realY1,realX2,realY2,connectionPaint);
+        canvas.drawLine(realX1, realY1, realX2, realY2, connectionPaint);
     }
 
     public boolean onTouchEvent(MotionEvent ev)
     {
-        gestureController.onTouchEvent(ev, nodeArray);
-        viewportPos.x = gestureController.getTranslateX();
-        viewportPos.y = gestureController.getTranslateY();
+        Node tappedNode = null;
+        switch(ev.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                for (int i = 0; i < nodeArray.size(); i++) {
+                    if (distance(nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < nodeArray.get(i).getRadius()) {
+                        tappedNode = nodeArray.get(i);
+                    }
+                }
+                viewportStart.x = ev.getX()-viewportPosOld.x;
+                viewportStart.y = ev.getY()-viewportPosOld.y;
+                viewportPos.x = ev.getX()-viewportStart.x;
+                viewportPos.y = ev.getY()-viewportStart.y;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                viewportPos.x = constrainX(ev.getX() - viewportStart.x);
+                viewportPos.y = constrainY(ev.getY()-viewportStart.y);
+                break;
+            case MotionEvent.ACTION_UP:
+                for (int i = 0; i < nodeArray.size(); i++) {
+                    if (distance(nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < nodeArray.get(i).getRadius()) {
+                        if (nodeArray.get(i) == tappedNode) {
+                            System.out.println("Tapped node at index: " + i);
+                        }
+                    }
+                }
+                tappedNode = null;
+
+                viewportPosOld.x = viewportPos.x;
+                viewportPosOld.x = viewportPos.x;
+                break;
+        }
+
         mScaleDetector.onTouchEvent(ev);
         invalidate();
 
@@ -156,6 +193,18 @@ public class PalaceView extends View {
         }
     }
 
+    // Makes sure translateX falls between 0 and width
+    private float constrainX(float x)
+    {
+        return Math.min(0,Math.max(x,-palaceWidth));
+    }
+
+    // Makes sure translateY falls between 0 and height
+    private float constrainY(float y)
+    {
+        return Math.min(0,Math.max(y,-palaceHeight));
+    }
+
     public Coord viewportToPalaceCoord(Coord viewportCoord) {
         Coord ret = new Coord((float)viewportCoord.x * mScaleFactor + viewportPos.x, (float)viewportCoord.y * mScaleFactor + viewportPos.y);
         return ret;
@@ -164,5 +213,9 @@ public class PalaceView extends View {
     public Coord palaceToViewportCoord(Coord palaceCoord) {
         Coord ret = new Coord((float)(palaceCoord.x - viewportPos.x)/mScaleFactor, (float)(palaceCoord.y - viewportPos.y)/mScaleFactor);
         return ret;
+    }
+
+    private double distance(Coord coord1, Coord coord2) {
+        return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
     }
 }
