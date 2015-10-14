@@ -31,21 +31,21 @@ public class SaveData {
         this.ois = null;
     }
 
-    public void saveNode(Node node) throws FileNotFoundException, IOException {
+    public void save(User user) throws FileNotFoundException, IOException {
         this.fos = this.ctx.openFileOutput(this.filename, this.ctx.MODE_PRIVATE);
         this.oos = new ObjectOutputStream(this.fos);
-        this.oos.writeObject(node);
+        this.oos.writeObject(user);
         this.oos.close();
         this.fos.close();
 
     }
 
-    public Node loadNode() throws FileNotFoundException, StreamCorruptedException, IOException, ClassNotFoundException {
+    public User load() throws FileNotFoundException, StreamCorruptedException, IOException, ClassNotFoundException {
         this.fis = this.ctx.openFileInput(this.filename);
         this.ois = new ObjectInputStream(this.fis);
-        Node restart = (Node) this.ois.readObject();
+        User loadedUser = (User)ois.readObject();
         this.ois.close();
         this.fis.close();
-        return restart;
+        return loadedUser;
     }
 }
