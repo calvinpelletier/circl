@@ -160,4 +160,9 @@ public class PalaceView extends View {
         Coord ret = new Coord((float)viewportCoord.x * mScaleFactor + viewportPos.x, (float)viewportCoord.y * mScaleFactor + viewportPos.y);
         return ret;
     }
+
+    public Coord palaceToViewportCoord(Coord palaceCoord) {
+        Coord ret = new Coord((float)(palaceCoord.x - viewportPos.x)/mScaleFactor, (float)(palaceCoord.y - viewportPos.y)/mScaleFactor);
+        return ret;
+    }
 }
