@@ -6,17 +6,16 @@ import android.view.ScaleGestureDetector;
 /**
  * Created by Calvin on 10/15/15.
  */
+
+//viewport is what the user sees on their screen
 public class Viewport {
 
-    private PalaceView palace;
+    private PalaceView palace; //palace is the entire canvas
 
-    private int palaceWidth;
-    private int palaceHeight;
-
-    private Coord position = new Coord(0.f, 0.f);
+    private Coord position = new Coord(0.f, 0.f); //viewport position relative to canvas
     private Coord touchStart = new Coord(0.f, 0.f);
     private Coord positionOld = new Coord(0.f, 0.f);
-    private float scale = 1.f;
+    private float scale = 1.f; //viewport scale (pinch and zoom)
 
     public Viewport(PalaceView palace) {
         this.palace = palace;
@@ -40,6 +39,7 @@ public class Viewport {
         return ret;
     }
 
+    //~~~USER INTERACTION~~~
     private Node tappedNode = null;
     public void onTouchEvent(MotionEvent ev) {
         switch(ev.getAction()) {
@@ -77,20 +77,23 @@ public class Viewport {
         // Don't let the object get too small or too large.
         scale = Math.max(0.1f, Math.min(scale, 5.0f));
     }
+    //~~~~~~
 
+    //~~~PRIVATE HELPER FUNCTIONS~~~
     // Makes sure viewport X falls between 0 and width
     private float constrainX(float x)
     {
-        return Math.min(palaceWidth,Math.max(x,0));
+        return Math.min(palace.width,Math.max(x,0));
     }
 
     // Makes sure viewport Y falls between 0 and height
     private float constrainY(float y)
     {
-        return Math.min(palaceHeight,Math.max(y,0));
+        return Math.min(palace.height,Math.max(y,0));
     }
 
     private double distance(Coord coord1, Coord coord2) {
         return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
     }
+    //~~~~~~
 }

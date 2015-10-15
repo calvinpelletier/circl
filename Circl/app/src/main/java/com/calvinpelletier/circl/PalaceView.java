@@ -12,10 +12,10 @@ import java.util.ArrayList;
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
-    private Viewport viewport;
+    private Viewport viewport; //viewport is what the user sees on their screen
 
-    public int palaceWidth = 400;
-    public int palaceHeight = 400;
+    public int width = 400;
+    public int height = 400;
 
     // A bunch of constants for drawing nodes and connections
     private final int FILL_COLOR = Color.rgb(0,49,94);
@@ -49,9 +49,11 @@ public class PalaceView extends View {
             }
         });
 
+        //adds nodes for debugging purposes
         tempInitialization();
     }
 
+    //~~~DRAWING FUNCTIONS~~~
     private Canvas canvas;
     @Override
     public void onDraw(Canvas canvas) {
@@ -104,10 +106,12 @@ public class PalaceView extends View {
 
         canvas.drawLine(realX1, realY1, realX2, realY2, connectionPaint);
     }
+    //~~~~~~
 
+    //~~~USER INTERACTION~~~
     public boolean onTouchEvent(MotionEvent ev)
     {
-        viewport.onTouchEvent(ev);
+        viewport.onTouchEvent(ev); //viewport handles most of the interaction
         mScaleDetector.onTouchEvent(ev);
         invalidate();
         return true;
@@ -118,11 +122,13 @@ public class PalaceView extends View {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            viewport.onScale(detector);
+            viewport.onScale(detector); //viewport handles most of the interaction
             return true;
         }
     }
+    //~~~~~~
 
+    //TODO: remove when user can add their own nodes. for debugging purposes only
     private void tempInitialization() {
         Node n1 = new Node(new Coord(100,100), Color.YELLOW);
         Node n2 = new Node(new Coord(490,120), Color.GREEN);
