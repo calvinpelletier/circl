@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -13,92 +12,58 @@ import java.util.ArrayList;
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
+    private Viewport viewport;
+
+    public int palaceWidth = 400;
+    public int palaceHeight = 400;
+
     // A bunch of constants for drawing nodes and connections
     private final int FILL_COLOR = Color.rgb(0,49,94);
     private final float STROKE_WIDTH = 5.f;
-
     private final Paint nodePaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint nodePaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint connectionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // Used for managing zoom
     private ScaleGestureDetector mScaleDetector;
-    private float mScaleFactor = 1.f;
-
-    //coordinates of the viewport relative to the palace
-    private Coord viewportPos;
-    private Coord touchStart;
-    private Coord viewportPosOld;
-
-    private int palaceWidth = 400;
-    private int palaceHeight = 400;
-
-    private Node tappedNode = null;
-
-    // Used for managing panning
-    //PVGestureController gestureController;
 
     //temporary storage for nodes
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
 
-    //screen size
-    int screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
-    int screenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
-
     public PalaceView(Context context)
     {
         super(context);
-        System.out.println("check-1");
-        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        //gestureController = new PVGestureController(400,400);
 
-        viewportPos = new Coord(0.f, 0.f);
-        touchStart = new Coord(0.f, 0.f);
-        viewportPosOld = new Coord(0.f, 0.f);
+        viewport = new Viewport(this);
 
         nodePaintFill.setColor(FILL_COLOR);
-
         connectionPaint.setColor(FILL_COLOR);
         connectionPaint.setStrokeWidth(STROKE_WIDTH);
-
         nodePaintStroke.setStyle(Paint.Style.STROKE);
         nodePaintStroke.setStrokeWidth(STROKE_WIDTH);
 
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
 
-        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
-        Node n2 = new Node(new Coord(490,120), Color.GREEN);
-        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
-        Node n4 = new Node(new Coord(200,300), Color.RED);
-        nodeArray.add(n1);
-        nodeArray.add(n2);
-        nodeArray.add(n3);
-        nodeArray.add(n4);
+        tempInitialization();
     }
 
-
-
     private Canvas canvas;
-
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         canvas.save();
-        canvas.scale(mScaleFactor, mScaleFactor);
-        canvas.translate(-viewportPos.x, -viewportPos.y);
+        canvas.scale(viewport.getScale(), viewport.getScale());
+        canvas.translate(-1 * viewport.getPosition().x, -1 * viewport.getPosition().y);
 
         for (int i = 0; i < nodeArray.size(); i++) {
             drawNode(canvas, nodeArray.get(i));
         }
-
-        /*drawConnection(canvas, n2, n3);
-        drawConnection(canvas, n1, n3);
-        drawConnection(canvas,n1,n4);*/
 
         canvas.restore();
     }
@@ -142,43 +107,9 @@ public class PalaceView extends View {
 
     public boolean onTouchEvent(MotionEvent ev)
     {
-        System.out.println("~~~~~~~");
-        System.out.println("node(0): " + nodeArray.get(0).getPosition().x + ", " + nodeArray.get(0).getPosition().y);
-        System.out.println("ev viewport: " + ev.getX() + ", " + ev.getY());
-        System.out.println("ev palace: " + viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())).x + ", " + viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())).y);
-        switch(ev.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                for (int i = 0; i < nodeArray.size(); i++) {
-                    if (distance(nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < nodeArray.get(i).getRadius()) {
-                        tappedNode = nodeArray.get(i);
-                    }
-                }
-                touchStart.x = ev.getX();
-                touchStart.y = ev.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                viewportPos.x = constrainX(touchStart.x - ev.getX() + viewportPosOld.x);
-                viewportPos.y = constrainY(touchStart.y - ev.getY() + viewportPosOld.y);
-                break;
-            case MotionEvent.ACTION_UP:
-                for (int i = 0; i < nodeArray.size(); i++) {
-                    if (distance(nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < nodeArray.get(i).getRadius()) {
-                        if (nodeArray.get(i) == tappedNode) {
-                            System.out.println("Tapped node at index: " + i);
-                        }
-                    }
-                }
-                tappedNode = null;
-
-                viewportPosOld.x = viewportPos.x;
-                viewportPosOld.y = viewportPos.y;
-                break;
-        }
-        System.out.println("----------");
+        viewport.onTouchEvent(ev);
         mScaleDetector.onTouchEvent(ev);
         invalidate();
-
         return true;
     }
 
@@ -187,38 +118,19 @@ public class PalaceView extends View {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            mScaleFactor *= detector.getScaleFactor();
-
-            // Don't let the object get too small or too large.
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
-
+            viewport.onScale(detector);
             return true;
         }
     }
 
-    // Makes sure translateX falls between 0 and width
-    private float constrainX(float x)
-    {
-        return Math.min(palaceWidth,Math.max(x,0));
-    }
-
-    // Makes sure translateY falls between 0 and height
-    private float constrainY(float y)
-    {
-        return Math.min(palaceHeight,Math.max(y,0));
-    }
-
-    public Coord viewportToPalaceCoord(Coord viewportCoord) {
-        Coord ret = new Coord((float)viewportCoord.x * mScaleFactor + viewportPos.x, (float)viewportCoord.y * mScaleFactor + viewportPos.y);
-        return ret;
-    }
-
-    public Coord palaceToViewportCoord(Coord palaceCoord) {
-        Coord ret = new Coord((float)(palaceCoord.x - viewportPos.x)/mScaleFactor, (float)(palaceCoord.y - viewportPos.y)/mScaleFactor);
-        return ret;
-    }
-
-    private double distance(Coord coord1, Coord coord2) {
-        return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
+    private void tempInitialization() {
+        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
+        Node n2 = new Node(new Coord(490,120), Color.GREEN);
+        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
+        Node n4 = new Node(new Coord(200,300), Color.RED);
+        nodeArray.add(n1);
+        nodeArray.add(n2);
+        nodeArray.add(n3);
+        nodeArray.add(n4);
     }
 }
