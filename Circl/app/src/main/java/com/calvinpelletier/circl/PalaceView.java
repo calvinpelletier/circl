@@ -12,20 +12,20 @@ import java.util.ArrayList;
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
+    private Viewport viewport; //viewport is what the user sees on their screen
+
+    public int width = 400;
+    public int height = 400;
+
     // A bunch of constants for drawing nodes and connections
     private final int FILL_COLOR = Color.rgb(0,49,94);
     private final float STROKE_WIDTH = 5.f;
-
     private final Paint nodePaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint nodePaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint connectionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     // Used for managing zoom
     private ScaleGestureDetector mScaleDetector;
-    private float mScaleFactor = 1.f;
-
-    // Used for managing panning
-    PVGestureController gestureController;
 
     //temporary storage for nodes
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
@@ -34,52 +34,38 @@ public class PalaceView extends View {
     {
         super(context);
 
-        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        gestureController = new PVGestureController(400,400);
+        viewport = new Viewport(this);
 
         nodePaintFill.setColor(FILL_COLOR);
-
         connectionPaint.setColor(FILL_COLOR);
         connectionPaint.setStrokeWidth(STROKE_WIDTH);
-
         nodePaintStroke.setStyle(Paint.Style.STROKE);
         nodePaintStroke.setStrokeWidth(STROKE_WIDTH);
 
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
             }
         });
 
-        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
-        Node n2 = new Node(new Coord(490,120), Color.GREEN);
-        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
-        Node n4 = new Node(new Coord(200,300), Color.RED);
-        nodeArray.add(n1);
-        nodeArray.add(n2);
-        nodeArray.add(n3);
-        nodeArray.add(n4);
+        //adds nodes for debugging purposes
+        tempInitialization();
     }
 
-
-
+    //~~~DRAWING FUNCTIONS~~~
     private Canvas canvas;
-
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         canvas.save();
-        canvas.scale(mScaleFactor, mScaleFactor);
-        canvas.translate(gestureController.getTranslateX(), gestureController.getTranslateY());
+        canvas.scale(viewport.getScale(), viewport.getScale());
+        canvas.translate(-1 * viewport.getPosition().x, -1 * viewport.getPosition().y);
 
         for (int i = 0; i < nodeArray.size(); i++) {
             drawNode(canvas, nodeArray.get(i));
         }
-
-        /*drawConnection(canvas, n2, n3);
-        drawConnection(canvas, n1, n3);
-        drawConnection(canvas,n1,n4);*/
 
         canvas.restore();
     }
@@ -118,15 +104,16 @@ public class PalaceView extends View {
         float realX2 = x2-kx*r2*(float)Math.cos(theta);
         float realY2 = y2-ky*r2*(float)Math.sin(theta);
 
-        canvas.drawLine(realX1,realY1,realX2,realY2,connectionPaint);
+        canvas.drawLine(realX1, realY1, realX2, realY2, connectionPaint);
     }
+    //~~~~~~
 
+    //~~~USER INTERACTION~~~
     public boolean onTouchEvent(MotionEvent ev)
     {
-        gestureController.onTouchEvent(ev, nodeArray);
+        viewport.onTouchEvent(ev); //viewport handles most of the interaction
         mScaleDetector.onTouchEvent(ev);
         invalidate();
-
         return true;
     }
 
@@ -135,12 +122,21 @@ public class PalaceView extends View {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            mScaleFactor *= detector.getScaleFactor();
-
-            // Don't let the object get too small or too large.
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
-
+            viewport.onScale(detector); //viewport handles most of the interaction
             return true;
         }
+    }
+    //~~~~~~
+
+    //TODO: remove when user can add their own nodes. for debugging purposes only
+    private void tempInitialization() {
+        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
+        Node n2 = new Node(new Coord(490,120), Color.GREEN);
+        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
+        Node n4 = new Node(new Coord(200,300), Color.RED);
+        nodeArray.add(n1);
+        nodeArray.add(n2);
+        nodeArray.add(n3);
+        nodeArray.add(n4);
     }
 }
