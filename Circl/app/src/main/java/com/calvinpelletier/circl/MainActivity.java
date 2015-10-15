@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OverlayFader.fadeIn(m,mainLayout);
+                OverlayMenu.fadeIn(m,mainLayout);
             }
         });
     }
