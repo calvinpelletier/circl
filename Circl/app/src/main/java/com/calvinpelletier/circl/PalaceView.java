@@ -92,7 +92,7 @@ public class PalaceView extends View {
         for (int i = 0; i < connectionArray.size(); i++) {
             Node a = connectionArray.get(i).getNodeA();
             Node b = connectionArray.get(i).getNodeB();
-            if ((a == node1 && b == node2) || (a == node2 && b == node1)) {
+            if ((a == node1 && b == node2) || (a == node2 && b == node1)) { //check that a connection doesn't already exist
                 return;
             }
         }

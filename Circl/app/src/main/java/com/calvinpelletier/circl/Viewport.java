@@ -70,6 +70,7 @@ public class Viewport {
                 position.y = constrainY(touchStart.y - ev.getY() + positionOld.y);
                 break;
             case MotionEvent.ACTION_UP:
+                //if the tap was released in the same place that it started
                 if (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance) {
                     if (placingNode) {
                         if (tappedNode == null) {
@@ -78,6 +79,7 @@ public class Viewport {
                         }
                     } else if (creatingConnection) {
                         if (tappedNode != null) {
+                            //check whether we're ready to set the first node or second
                             if (firstNodeInConnection == null) {
                                 firstNodeInConnection = tappedNode;
                                 palace.startAddConnection2();
@@ -89,10 +91,11 @@ public class Viewport {
                         }
                     } else {
                         if (tappedNode != null) {
-                            System.out.println("Tapped node: " + tappedNode);
+                            System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
                         }
                     }
                 }
+
                 tappedNode = null;
                 positionOld.x = position.x;
                 positionOld.y = position.y;
