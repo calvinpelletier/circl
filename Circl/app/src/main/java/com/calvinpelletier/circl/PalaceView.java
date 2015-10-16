@@ -1,9 +1,12 @@
 package com.calvinpelletier.circl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -12,12 +15,14 @@ import java.util.ArrayList;
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
+    private MainActivity mainActivity;
+
     private Viewport viewport; //viewport is what the user sees on their screen
 
     public int width = 400;
     public int height = 400;
 
-    // A bunch of constants for drawing nodes and connections
+    // A bunch of constants for drawing nodes, connections, and instructions
     private final int FILL_COLOR = Color.rgb(0,49,94);
     private final float STROKE_WIDTH = 5.f;
     private final Paint nodePaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -33,6 +38,8 @@ public class PalaceView extends View {
     public PalaceView(Context context)
     {
         super(context);
+
+        mainActivity = (MainActivity) context;
 
         viewport = new Viewport(this);
 
@@ -51,6 +58,17 @@ public class PalaceView extends View {
 
         //adds nodes for debugging purposes
         tempInitialization();
+    }
+
+    //~~~MENU FUNCTIONS~~~
+    public void startAddNode() {
+        viewport.setPlacingNode(true);
+        mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.VISIBLE);
+    }
+    public void addNode(Coord pos) {
+        mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.GONE);
+        nodeArray.add(new Node(pos, Color.BLACK));
+        invalidate();
     }
 
     //~~~DRAWING FUNCTIONS~~~
