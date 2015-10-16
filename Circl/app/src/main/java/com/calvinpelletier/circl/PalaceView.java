@@ -32,8 +32,9 @@ public class PalaceView extends View {
     // Used for managing zoom
     private ScaleGestureDetector mScaleDetector;
 
-    //temporary storage for nodes
+    //temporary storage for nodes and connections
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
+    public ArrayList<Connection> connectionArray = new ArrayList<Connection>();
 
     public PalaceView(Context context)
     {
@@ -64,12 +65,41 @@ public class PalaceView extends View {
     public void startAddNode() {
         viewport.setPlacingNode(true);
         mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.VISIBLE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
     }
     public void addNode(Coord pos) {
         mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
         nodeArray.add(new Node(pos, Color.BLACK));
         invalidate();
     }
+
+    public void startAddConnection() {
+        viewport.startAddConnection();
+        mainActivity.findViewById(R.id.tapFirstNode).setVisibility(View.VISIBLE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
+    }
+    public void startAddConnection2() {
+        mainActivity.findViewById(R.id.tapFirstNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.tapSecondNode).setVisibility(View.VISIBLE);
+    }
+    public void addConnection(Node node1, Node node2) {
+        mainActivity.findViewById(R.id.tapSecondNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
+        if (node1 == node2) {
+            return;
+        }
+        for (int i = 0; i < connectionArray.size(); i++) {
+            Node a = connectionArray.get(i).getNodeA();
+            Node b = connectionArray.get(i).getNodeB();
+            if ((a == node1 && b == node2) || (a == node2 && b == node1)) {
+                return;
+            }
+        }
+        connectionArray.add(new Connection(node1, node2));
+        invalidate();
+    }
+    //~~~~~~
 
     //~~~DRAWING FUNCTIONS~~~
     private Canvas canvas;
@@ -83,6 +113,9 @@ public class PalaceView extends View {
 
         for (int i = 0; i < nodeArray.size(); i++) {
             drawNode(canvas, nodeArray.get(i));
+        }
+        for (int i = 0; i < connectionArray.size(); i++) {
+            drawConnection(canvas, connectionArray.get(i).getNodeA(), connectionArray.get(i).getNodeB());
         }
 
         canvas.restore();

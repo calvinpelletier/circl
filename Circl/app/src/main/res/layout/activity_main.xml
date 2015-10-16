@@ -25,10 +25,32 @@
 
     <View
         android:background="@drawable/tap_to_place_node"
-        android:layout_width="129dp"
-        android:layout_height="23dp"
+        android:layout_width="247dp"
+        android:layout_height="44dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/tapToPlaceNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_first_node"
+        android:layout_width="192dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapFirstNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_second_node"
+        android:layout_width="238dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapSecondNode"
         android:layout_margin="20dp"
         android:visibility="gone">
 
