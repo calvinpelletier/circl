@@ -12,13 +12,14 @@ public class Viewport {
 
     private PalaceView palace; //palace is the entire canvas
 
-    private final double sameTouchLocationTolerance = 10.0;
+    private final double sameTouchLocationTolerance = 20.0;
 
     private Coord position = new Coord(0.f, 0.f); //viewport position relative to canvas
     private Coord touchStart = new Coord(0.f, 0.f);
     private Coord positionOld = new Coord(0.f, 0.f);
     private float scale = 1.f; //viewport scale (pinch and zoom)
     private boolean placingNode = false;
+    private boolean creatingConnection = false;
 
     public Viewport(PalaceView palace) {
         this.palace = palace;
@@ -36,6 +37,10 @@ public class Viewport {
         this.placingNode = placingNode;
     }
 
+    public void startAddConnection() {
+        this.creatingConnection = true;
+    }
+
     public Coord viewportToPalaceCoord(Coord viewportCoord) {
         Coord ret = new Coord((float)viewportCoord.x * scale + position.x, (float)viewportCoord.y * scale + position.y);
         return ret;
@@ -48,6 +53,7 @@ public class Viewport {
 
     //~~~USER INTERACTION~~~
     private Node tappedNode = null;
+    private Node firstNodeInConnection = null;
     public void onTouchEvent(MotionEvent ev) {
         switch(ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -64,10 +70,28 @@ public class Viewport {
                 position.y = constrainY(touchStart.y - ev.getY() + positionOld.y);
                 break;
             case MotionEvent.ACTION_UP:
-                for (int i = 0; i < palace.nodeArray.size(); i++) {
-                    if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getRadius()) {
-                        if (palace.nodeArray.get(i) == tappedNode) {
-                            System.out.println("Tapped node at index: " + i);
+                //if the tap was released in the same place that it started
+                if (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance) {
+                    if (placingNode) {
+                        if (tappedNode == null) {
+                            placingNode = false;
+                            palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
+                        }
+                    } else if (creatingConnection) {
+                        if (tappedNode != null) {
+                            //check whether we're ready to set the first node or second
+                            if (firstNodeInConnection == null) {
+                                firstNodeInConnection = tappedNode;
+                                palace.startAddConnection2();
+                            } else {
+                                palace.addConnection(firstNodeInConnection, tappedNode);
+                                firstNodeInConnection = null;
+                                creatingConnection = false;
+                            }
+                        }
+                    } else {
+                        if (tappedNode != null) {
+                            System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
                         }
                     }
                 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class Node implements java.io.Serializable {
 
-    private ArrayList<Connection> connectionArray = new ArrayList<Connection>();
     private int outlineColor = Color.BLACK;
     private Coord position;
     private final int radius = 50;
