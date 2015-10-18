@@ -42,7 +42,8 @@
             android:gravity="center_horizontal"
             android:layout_below="@+id/layouttop_sb"
             android:layout_marginTop="50dp"
-            android:textSize="25sp" />
+            android:textSize="22sp"
+            android:padding="10sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -50,8 +51,9 @@
             android:text="@string/style"
             android:id="@+id/style_sb"
             android:gravity="center_horizontal"
-            android:textSize="25sp"
-            android:layout_below="@+id/content_sb" />
+            android:textSize="22sp"
+            android:layout_below="@+id/content_sb"
+            android:padding="10sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,24 +61,27 @@
             android:text="@string/settings"
             android:id="@+id/settings_sb"
             android:gravity="center_horizontal"
-            android:textSize="25sp"
-            android:layout_below="@+id/style_sb" />
+            android:textSize="22sp"
+            android:layout_below="@+id/style_sb"
+            android:padding="10sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/delete"
             android:id="@+id/delete_sb"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/settings_sb" />
+            android:layout_below="@+id/settings_sb"
+            android:padding="10sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/editorLayout">
+        android:id="@+id/contentLayout"
+        android:visibility="gone">
 
         <Button
                 style="?android:attr/buttonStyleSmall"
@@ -138,6 +143,49 @@
                 android:focusableInTouchMode="false"/>
         </ScrollView>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/styleLayout"
+        android:visibility="gone">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:text="@string/styleTitle"
+            android:gravity="center_horizontal" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/settingsLayout"
+        android:visibility="gone">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:text="@string/settingsTitle"
+            android:gravity="center_horizontal" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/deleteLayout"
+        android:visibility="visible">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText4"
+            android:gravity="center_horizontal"
+            android:text="@string/deleteTitle" />
     </RelativeLayout>
 
 </LinearLayout>

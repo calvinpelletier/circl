@@ -24,4 +24,13 @@
     <string name = "delete">
         delete
     </string>
+    <string name = "styleTitle">
+        Style
+    </string>
+    <string name = "settingsTitle">
+        Settings
+    </string>
+    <string name = "deleteTitle">
+        Delete Node
+    </string>
 </resources>
