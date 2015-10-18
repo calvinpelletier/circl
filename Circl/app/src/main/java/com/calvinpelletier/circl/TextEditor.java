@@ -28,6 +28,11 @@ public class TextEditor {
     private TextView settings_sb;
     private TextView delete_sb;
 
+    // The layouts for each of the four "modes"
+    private RelativeLayout contentLayout;
+    private RelativeLayout styleLayout;
+    private RelativeLayout settingsLayout;
+    private RelativeLayout deleteLayout;
 
     public TextEditor(MainActivity context)
     {
@@ -47,9 +52,18 @@ public class TextEditor {
         this.settings_sb = (TextView)context.findViewById(R.id.settings_sb);
         this.delete_sb = (TextView)context.findViewById(R.id.delete_sb);
 
+        this.contentLayout = (RelativeLayout)context.findViewById(R.id.contentLayout);
+        this.styleLayout = (RelativeLayout)context.findViewById(R.id.styleLayout);
+        this.settingsLayout = (RelativeLayout)context.findViewById(R.id.settingsLayout);
+        this.deleteLayout = (RelativeLayout)context.findViewById(R.id.deleteLayout);
+
         titleEditor.setText(textNode.title);
         editor.setText(textNode.content);
 
+        content_sb.setOnClickListener(displayContentEditor);
+        style_sb.setOnClickListener(displayStyleEditor);
+        settings_sb.setOnClickListener(displaySettingsEditor);
+        delete_sb.setOnClickListener(displayDeleteEditor);
 
         // On edit click, slide in - for now i'm just gonna do it
 
@@ -64,6 +78,46 @@ public class TextEditor {
             }
         });
     }
+
+    private View.OnClickListener displayContentEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.VISIBLE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displayStyleEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.VISIBLE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displaySettingsEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.VISIBLE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displayDeleteEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.VISIBLE);
+        }
+    };
 
     private void makeEditable(EditText e)
     {
