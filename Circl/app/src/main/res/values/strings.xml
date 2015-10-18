@@ -13,15 +13,15 @@
         Quit
     </string>
     <string name = "content">
-        Content
+        content
     </string>
     <string name = "style">
-        Style
+        style
     </string>
     <string name = "settings">
-        Settings
+        settings
     </string>
     <string name = "delete">
-        Delete
+        delete
     </string>
 </resources>
