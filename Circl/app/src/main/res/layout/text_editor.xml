@@ -11,22 +11,24 @@
         android:visibility="visible">
 
             <Button
-                android:layout_width="40dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
                 android:id="@+id/saveButton_sb"
                 android:background="@drawable/check_icon"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="5dp" />
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="10dp" />
 
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:id="@+id/discardButton_sb"
                 android:background="@drawable/x_icon"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_margin="5dp" />
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp" />
 
 
         <TextView
@@ -91,37 +93,41 @@
 
         <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/editButton"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="10dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/edit_icon"/>
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:id="@+id/closeButton"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/x_icon"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/contentTitle"
-            android:layout_below="@+id/editButton"
             android:text="@string/contentTitle"
             android:gravity="center_horizontal"
+            android:background="#00000000"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:textColor="@color/white"
-            android:inputType="none" />
+            android:inputType="none"
+            android:textSize="32dp"
+            android:layout_marginTop="30dp"
+            android:hint="Enter Title..."
+            android:textColorHint="@color/editorHintColor"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -135,6 +141,7 @@
                 android:gravity="top|left"
                 android:inputType="textMultiLine"
                 android:ems="10"
+                android:background="#00000000"
                 android:id="@+id/editor"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
@@ -145,7 +152,9 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:hint="Content..."
+                android:textColorHint="@color/editorHintColor"/>
         </ScrollView>
 
     </RelativeLayout>

@@ -80,17 +80,6 @@ public class TextEditor {
         layoutModes[2] = settingsLayout;
         layoutModes[3] = deleteLayout;
 
-        if(textNode != null)
-        {
-            titleEditor.setText(textNode.title);
-            editor.setText(textNode.content);
-        }
-        else
-        {
-            titleEditor.setText("Default Title");
-            editor.setText("Default Content");
-        }
-
 
         content_sb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +138,20 @@ public class TextEditor {
 
         closeButton = (Button)context.findViewById(R.id.closeButton);
         // At some point, we'll have an on click listener to close the editor.
+
+
+
+        if(textNode != null)
+        {
+            titleEditor.setText(textNode.title);
+            editor.setText(textNode.content);
+        }
+        else
+        {
+            titleEditor.setText("");
+            editor.setText("");
+            slideInSideBar();
+        }
     }
 
     private void displayLayout(int layoutIdx)
@@ -246,6 +249,9 @@ public class TextEditor {
 
         editButton.setVisibility(View.VISIBLE);
         closeButton.setVisibility(View.VISIBLE);
+
+        // also set to main content view.
+        displayLayout(0);
     }
         /*
         final Animation fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.slideout_editor);
