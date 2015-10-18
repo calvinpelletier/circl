@@ -25,18 +25,24 @@ public class TextEditor {
     private Button editButton;
     private Button closeButton;
 
-
     // The sidebar editor toggling buttons, to switch between editing windows
     private TextView content_sb;
     private TextView style_sb;
     private TextView settings_sb;
     private TextView delete_sb;
 
+    private TextView [] layoutModeButtons;
+
     // The layouts for each of the four "modes"
     private RelativeLayout contentLayout;
     private RelativeLayout styleLayout;
     private RelativeLayout settingsLayout;
     private RelativeLayout deleteLayout;
+
+    private RelativeLayout [] layoutModes;
+
+    private Button saveButton_sb;
+    private Button discardButton_sb;
 
     public TextEditor(MainActivity context)
     {
@@ -56,75 +62,106 @@ public class TextEditor {
         this.settings_sb = (TextView)context.findViewById(R.id.settings_sb);
         this.delete_sb = (TextView)context.findViewById(R.id.delete_sb);
 
+        layoutModeButtons = new TextView[4];
+        layoutModeButtons[0] = content_sb;
+        layoutModeButtons[1] = style_sb;
+        layoutModeButtons[2] = settings_sb;
+        layoutModeButtons[3] = delete_sb;
+
         this.contentLayout = (RelativeLayout)context.findViewById(R.id.contentLayout);
         this.styleLayout = (RelativeLayout)context.findViewById(R.id.styleLayout);
         this.settingsLayout = (RelativeLayout)context.findViewById(R.id.settingsLayout);
         this.deleteLayout = (RelativeLayout)context.findViewById(R.id.deleteLayout);
 
+        layoutModes = new RelativeLayout[4];
+
+        layoutModes[0] = contentLayout;
+        layoutModes[1] = styleLayout;
+        layoutModes[2] = settingsLayout;
+        layoutModes[3] = deleteLayout;
+
         titleEditor.setText(textNode.title);
         editor.setText(textNode.content);
 
-        content_sb.setOnClickListener(displayContentEditor);
-        style_sb.setOnClickListener(displayStyleEditor);
-        settings_sb.setOnClickListener(displaySettingsEditor);
-        delete_sb.setOnClickListener(displayDeleteEditor);
-
-        // On edit click, slide in - for now i'm just gonna do it
-
-        Button editButton = (Button)context.findViewById(R.id.editButton);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        content_sb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editable)
-                    slideOutSideBar();
-                else
-                    slideInSideBar();
+                displayLayout(0);
             }
         });
 
-        closeButton = (Button)context.findViewById(R.id.button7);
+        style_sb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayLayout(1);
+            }
+        });
+
+        settings_sb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayLayout(2);
+            }
+        });
+
+        delete_sb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayLayout(3);
+            }
+        });
+
+        // On edit click, slide in - for now i'm just gonna do it
+
+        editButton = (Button)context.findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               slideInSideBar();
+            }
+        });
+
+        saveButton_sb = (Button)context.findViewById(R.id.saveButton_sb);
+        saveButton_sb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slideOutSideBar();
+            }
+        });
+
+        discardButton_sb = (Button)context.findViewById(R.id.discardButton_sb);
+        discardButton_sb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slideOutSideBar();
+            }
+        });
+
+
+        closeButton = (Button)context.findViewById(R.id.closeButton);
         // At some point, we'll have an on click listener to close the editor.
     }
 
-    private View.OnClickListener displayContentEditor = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            contentLayout.setVisibility(View.VISIBLE);
-            styleLayout.setVisibility(View.GONE);
-            settingsLayout.setVisibility(View.GONE);
-            deleteLayout.setVisibility(View.GONE);
+    private void displayLayout(int layoutIdx)
+    {
+        for(int i = 0;i < 4;i++)
+        {
+            RelativeLayout currLayout = layoutModes[i];
+            TextView currToggleButton = layoutModeButtons[i];
+            if(i == layoutIdx)
+            {
+                // Display this
+                currLayout.setVisibility(View.VISIBLE);
+                currToggleButton.setBackgroundResource(R.color.blue);
+            }
+            else
+            {
+                // Hide this
+                currLayout.setVisibility(View.GONE);
+                currToggleButton.setBackgroundResource(R.color.lightBlue);
+            }
         }
-    };
-
-    private View.OnClickListener displayStyleEditor = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            contentLayout.setVisibility(View.GONE);
-            styleLayout.setVisibility(View.VISIBLE);
-            settingsLayout.setVisibility(View.GONE);
-            deleteLayout.setVisibility(View.GONE);
-        }
-    };
-
-    private View.OnClickListener displaySettingsEditor = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            contentLayout.setVisibility(View.GONE);
-            styleLayout.setVisibility(View.GONE);
-            settingsLayout.setVisibility(View.VISIBLE);
-            deleteLayout.setVisibility(View.GONE);
-        }
-    };
-
-    private View.OnClickListener displayDeleteEditor = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            contentLayout.setVisibility(View.GONE);
-            styleLayout.setVisibility(View.GONE);
-            settingsLayout.setVisibility(View.GONE);
-            deleteLayout.setVisibility(View.VISIBLE);
-        }
-    };
+    }
 
     private void makeEditable(EditText e)
     {
