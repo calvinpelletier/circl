@@ -193,6 +193,14 @@ public class TextEditor {
 
     private void slideInSideBar()
     {
+        sideBar.setVisibility(View.VISIBLE);
+        editable = true;
+
+        makeEditable(titleEditor);
+        makeEditable(editor);
+        editButton.setVisibility(View.GONE);
+        closeButton.setVisibility(View.GONE);
+        /*
         sideBar.setVisibility(View.INVISIBLE);
         final Animation fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.slidein_editor);
         // Now Set your animation
@@ -221,10 +229,25 @@ public class TextEditor {
 
             }
         });
+        */
     }
 
     private void slideOutSideBar()
     {
+        sideBar.setVisibility(View.GONE);
+        editable = false;
+        makeNotEditable(titleEditor);
+        makeNotEditable(editor);
+
+        // Automatically hide the keyboard in case they had it open
+        // If we don't do this, they can still edit the content
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editor.getWindowToken(), 0);
+
+        editButton.setVisibility(View.VISIBLE);
+        closeButton.setVisibility(View.VISIBLE);
+    }
+        /*
         final Animation fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.slideout_editor);
         // Now Set your animation
         sideBar.startAnimation(fadeOutAnimation);
@@ -257,4 +280,5 @@ public class TextEditor {
             }
         });
     }
+    */
 }
