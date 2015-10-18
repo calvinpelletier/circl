@@ -95,7 +95,18 @@ public class Viewport {
                         }
                     }
                 }
-
+                if (placingNode && tappedNode==null && (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance)) {
+                    boolean temp = true;
+                    for (int i = 0; i < palace.nodeArray.size(); i++) {
+                        if (distance(palace.nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < (palace.nodeArray.get(i).getRadius() * 2)+10) {
+                            temp = false;
+                        }
+                    }
+                    if (temp) {
+                        placingNode = false;
+                        palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
+                    }
+                }
                 tappedNode = null;
                 positionOld.x = position.x;
                 positionOld.y = position.y;
