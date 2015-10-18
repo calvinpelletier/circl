@@ -16,18 +16,18 @@
             android:id="@+id/layouttop_sb">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:id="@+id/editbutton_sb"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:background="@drawable/check_icon"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:id="@+id/exitbutton_sb"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:background="@drawable/x_icon"/>
 
         </LinearLayout>
 
@@ -92,24 +92,23 @@
 
         <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:id="@+id/button6"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:background="@drawable/edit_icon"/>
 
             <Button
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quit"
-
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:id="@+id/button7"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:background="@drawable/x_icon"/>
 
         <EditText
             android:layout_width="match_parent"
