@@ -61,6 +61,9 @@ public class Viewport {
                     if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getRadius()) {
                         if (palace.nodeArray.get(i) == tappedNode) {
                             System.out.println("Tapped node at index: " + i);
+                            TextEditor editor = new TextEditor((MainActivity)palace.getContext());
+                            TextNode thisNode = new TextNode(tappedNode.getPosition(),tappedNode.getOutline(),"","");
+                            editor.open(thisNode,true);
                         }
                     }
                 }
