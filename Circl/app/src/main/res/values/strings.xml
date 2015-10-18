@@ -6,4 +6,22 @@
     <string name="node_placeholder">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mollis metus eget erat aliquet, eget iaculis nisl tincidunt. Nulla dignissim velit ut faucibus suscipit. Duis diam quam, viverra vitae lacinia a, maximus nec nibh. Sed blandit posuere metus et volutpat. Vestibulum auctor eget nulla eget gravida. Sed imperdiet rutrum est, ut dictum lacus finibus vitae. Fusce eleifend justo quis dolor maximus, a sagittis ligula posuere. Proin mattis est mauris, quis mollis elit commodo nec. Donec faucibus quam id ultrices porttitor. Aenean convallis, dolor id semper facilisis, libero mi efficitur urna, sed eleifend felis dui vitae libero. Sed rhoncus ante leo, ac tempus massa rutrum non. In vehicula lorem eget dolor vulputate, quis venenatis leo blandit. Fusce ac commodo velit, vitae congue est. Morbi eu malesuada ipsum.
     </string>
+    <string name ="edit">
+        Edit
+    </string>
+    <string name = "quit">
+        Quit
+    </string>
+    <string name = "content">
+        Content
+    </string>
+    <string name = "style">
+        Style
+    </string>
+    <string name = "settings">
+        Settings
+    </string>
+    <string name = "delete">
+        Delete
+    </string>
 </resources>
