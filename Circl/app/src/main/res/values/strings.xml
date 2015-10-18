@@ -39,4 +39,7 @@
     <string name = "deletePrompt">
         Delete
     </string>
+    <string name = "savePrompt">
+        save
+    </string>
 </resources>

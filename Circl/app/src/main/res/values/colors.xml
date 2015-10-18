@@ -5,4 +5,6 @@
     <item name = "lightBlue" type = "color">#445C77</item>
     <item name  = "red" type = "color">#E50000</item>
     <item name="editorHintColor" type="color">#dddddd</item>
+    <item name = "green" type = "color">#00CC00</item>
+>>>>>>> Stashed changes
 </resources>

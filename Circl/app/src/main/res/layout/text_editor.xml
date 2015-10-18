@@ -10,27 +10,6 @@
         android:background="@color/lightBlue"
         android:visibility="visible">
 
-            <Button
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:id="@+id/saveButton_sb"
-                android:background="@drawable/check_icon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="11dp"
-                android:layout_marginLeft="10dp" />
-
-            <Button
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:id="@+id/discardButton_sb"
-                android:background="@drawable/x_icon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp" />
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,8 +20,6 @@
             android:layout_alignParentTop="false"
             android:layout_alignParentBottom="false"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/saveButton_sb"
-            android:layout_marginTop="15dp"
             android:textSize="22sp"
             android:padding="10sp"
             android:background="@color/blue"
@@ -81,6 +58,25 @@
             android:layout_below="@+id/settings_sb"
             android:padding="10sp"
             android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/savePrompt"
+            android:id="@+id/saveButton"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="125dp"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:background="@color/green" />
 
     </RelativeLayout>
 

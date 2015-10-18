@@ -41,8 +41,7 @@ public class TextEditor {
 
     private RelativeLayout [] layoutModes;
 
-    private Button saveButton_sb;
-    private Button discardButton_sb;
+    private TextView saveButton;
 
     public TextEditor(MainActivity context)
     {
@@ -119,16 +118,8 @@ public class TextEditor {
             }
         });
 
-        saveButton_sb = (Button)context.findViewById(R.id.saveButton_sb);
-        saveButton_sb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                slideOutSideBar();
-            }
-        });
-
-        discardButton_sb = (Button)context.findViewById(R.id.discardButton_sb);
-        discardButton_sb.setOnClickListener(new View.OnClickListener() {
+        saveButton = (TextView)context.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 slideOutSideBar();
