@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by wilson on 10/15/15.
@@ -21,6 +22,13 @@ public class TextEditor {
     private EditText titleEditor;
     private EditText editor;
 
+    // The sidebar editor toggling buttons, to switch between editing windows
+    private TextView content_sb;
+    private TextView style_sb;
+    private TextView settings_sb;
+    private TextView delete_sb;
+
+
     public TextEditor(MainActivity context)
     {
         this.context = context;
@@ -33,6 +41,11 @@ public class TextEditor {
 
         this.titleEditor = (EditText)context.findViewById(R.id.editText);
         this.editor = (EditText)context.findViewById(R.id.editor);
+
+        this.content_sb = (TextView)context.findViewById(R.id.content_sb);
+        this.style_sb = (TextView)context.findViewById(R.id.style_sb);
+        this.settings_sb = (TextView)context.findViewById(R.id.settings_sb);
+        this.delete_sb = (TextView)context.findViewById(R.id.delete_sb);
 
         titleEditor.setText(textNode.title);
         editor.setText(textNode.content);
@@ -50,7 +63,6 @@ public class TextEditor {
                     slideInSideBar();
             }
         });
-
     }
 
     private void makeEditable(EditText e)
