@@ -74,7 +74,7 @@ public class Viewport {
                 if (placingNode && tappedNode==null && (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance)) {
                     boolean temp = true;
                     for (int i = 0; i < palace.nodeArray.size(); i++) {
-                        if (distance(palace.nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < (palace.nodeArray.get(i).getRadius() * 2)) {
+                        if (distance(palace.nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < (palace.nodeArray.get(i).getRadius() * 2)+10) {
                             temp = false;
                         }
                     }
