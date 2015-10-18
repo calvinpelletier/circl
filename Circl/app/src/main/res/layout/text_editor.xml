@@ -60,7 +60,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/savePrompt"
             android:id="@+id/saveButton"
@@ -70,13 +70,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="125dp"
             android:gravity="center_horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:background="@color/green" />
+            android:background="@color/green"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
 
     </RelativeLayout>
 
@@ -84,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/contentLayout"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@color/blue">
 
         <Button
@@ -159,7 +157,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/styleLayout"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@color/blue">
 
         <TextView
@@ -169,7 +167,7 @@
             android:id="@+id/styleTitle"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="20sp"
+            android:textSize="32sp"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
             android:layout_marginTop="10dp" />
@@ -190,9 +188,20 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-            android:textSize="20sp"
+            android:textSize="32sp"
             android:textColor="@color/white"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settingsNotReady"
+            android:id="@+id/textView"
+            android:layout_below="@+id/settingsTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -210,7 +219,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="32sp"
             android:gravity="center_horizontal"
             android:layout_marginTop="10dp" />
 
