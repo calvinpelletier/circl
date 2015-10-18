@@ -33,6 +33,8 @@ public class TextEditor {
 
     private TextView [] layoutModeButtons;
 
+    private TextView saveButton;
+
     // The layouts for each of the four "modes"
     private RelativeLayout contentLayout;
     private RelativeLayout styleLayout;
@@ -41,14 +43,14 @@ public class TextEditor {
 
     private RelativeLayout [] layoutModes;
 
-    private TextView saveButton;
+    private TextNode activeNode;
 
     public TextEditor(MainActivity context)
     {
         this.context = context;
     }
 
-    public void open(TextNode textNode)
+    public void open(TextNode textNode,boolean nodeIsNew)
     {
         context.setContentView(R.layout.text_editor);
         this.sideBar = (RelativeLayout)context.findViewById(R.id.sideBar);
@@ -122,6 +124,11 @@ public class TextEditor {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // We need to update the active node.
+                activeNode.title = titleEditor.getText().toString();
+                activeNode.content = editor.getText().toString();
+
                 slideOutSideBar();
             }
         });
@@ -130,19 +137,30 @@ public class TextEditor {
         closeButton = (Button)context.findViewById(R.id.closeButton);
         // At some point, we'll have an on click listener to close the editor.
 
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.init();
+            }
+        });
 
 
-        if(textNode != null)
+
+        titleEditor.setText(textNode.title);
+        editor.setText(textNode.content);
+
+        activeNode = textNode;
+
+        if(nodeIsNew)
         {
-            titleEditor.setText(textNode.title);
-            editor.setText(textNode.content);
-        }
-        else
-        {
-            titleEditor.setText("");
-            editor.setText("");
             slideInSideBar();
         }
+
+    }
+
+    public TextNode getActiveNode()
+    {
+        return activeNode;
     }
 
     private void displayLayout(int layoutIdx)
