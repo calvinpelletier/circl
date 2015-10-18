@@ -6,7 +6,8 @@
     <RelativeLayout
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:id="@+id/sideBar">
+        android:id="@+id/sideBar"
+        android:background="@color/lightBlue">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -41,9 +42,11 @@
             android:layout_alignParentBottom="false"
             android:gravity="center_horizontal"
             android:layout_below="@+id/layouttop_sb"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="15dp"
             android:textSize="22sp"
-            android:padding="10sp" />
+            android:padding="10sp"
+            android:background="@color/blue"
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
@@ -53,7 +56,8 @@
             android:gravity="center_horizontal"
             android:textSize="22sp"
             android:layout_below="@+id/content_sb"
-            android:padding="10sp" />
+            android:padding="10sp"
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
@@ -63,7 +67,8 @@
             android:gravity="center_horizontal"
             android:textSize="22sp"
             android:layout_below="@+id/style_sb"
-            android:padding="10sp" />
+            android:padding="10sp"
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
@@ -73,7 +78,8 @@
             android:textSize="22sp"
             android:gravity="center_horizontal"
             android:layout_below="@+id/settings_sb"
-            android:padding="10sp" />
+            android:padding="10sp"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -81,7 +87,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/contentLayout"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:background="@color/blue">
 
         <Button
                 style="?android:attr/buttonStyleSmall"
@@ -109,7 +116,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_below="@+id/button6"
-            android:text="My note title"
+            android:text="@string/contentTitle"
             android:gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -117,7 +124,8 @@
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:textColor="@color/white" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -140,7 +148,8 @@
                 android:clickable="false"
                 android:cursorVisible="false"
                 android:focusable="false"
-                android:focusableInTouchMode="false"/>
+                android:focusableInTouchMode="false"
+                android:textColor="@color/white" />
         </ScrollView>
 
     </RelativeLayout>
@@ -178,7 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/deleteLayout"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <EditText
             android:layout_width="match_parent"

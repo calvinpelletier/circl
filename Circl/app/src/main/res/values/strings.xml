@@ -33,4 +33,7 @@
     <string name = "deleteTitle">
         Delete Node
     </string>
+    <string name = "contentTitle">
+        Content
+    </string>
 </resources>
