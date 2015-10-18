@@ -80,8 +80,17 @@ public class TextEditor {
         layoutModes[2] = settingsLayout;
         layoutModes[3] = deleteLayout;
 
-        titleEditor.setText(textNode.title);
-        editor.setText(textNode.content);
+        if(textNode != null)
+        {
+            titleEditor.setText(textNode.title);
+            editor.setText(textNode.content);
+        }
+        else
+        {
+            titleEditor.setText("Default Title");
+            editor.setText("Default Content");
+        }
+
 
         content_sb.setOnClickListener(new View.OnClickListener() {
             @Override
