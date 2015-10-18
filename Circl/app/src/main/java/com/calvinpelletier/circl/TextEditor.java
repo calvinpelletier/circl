@@ -26,13 +26,16 @@ public class TextEditor {
         this.context = context;
     }
 
-    public void open(Node node)
+    public void open(TextNode textNode)
     {
         context.setContentView(R.layout.text_editor);
         this.sideBar = (RelativeLayout)context.findViewById(R.id.sideBar);
 
         this.titleEditor = (EditText)context.findViewById(R.id.editText);
         this.editor = (EditText)context.findViewById(R.id.editor);
+
+        titleEditor.setText(textNode.title);
+        editor.setText(textNode.content);
 
 
         // On edit click, slide in - for now i'm just gonna do it
