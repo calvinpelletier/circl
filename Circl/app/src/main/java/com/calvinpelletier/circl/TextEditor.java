@@ -22,6 +22,10 @@ public class TextEditor {
     private EditText titleEditor;
     private EditText editor;
 
+    private Button editButton;
+    private Button closeButton;
+
+
     // The sidebar editor toggling buttons, to switch between editing windows
     private TextView content_sb;
     private TextView style_sb;
@@ -67,7 +71,7 @@ public class TextEditor {
 
         // On edit click, slide in - for now i'm just gonna do it
 
-        Button editButton = (Button)context.findViewById(R.id.button6);
+        editButton = (Button)context.findViewById(R.id.button6);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +81,9 @@ public class TextEditor {
                     slideInSideBar();
             }
         });
+
+        closeButton = (Button)context.findViewById(R.id.button7);
+        // At some point, we'll have an on click listener to close the editor.
     }
 
     private View.OnClickListener displayContentEditor = new View.OnClickListener() {
@@ -158,6 +165,8 @@ public class TextEditor {
 
                 makeEditable(titleEditor);
                 makeEditable(editor);
+                editButton.setVisibility(View.GONE);
+                closeButton.setVisibility(View.GONE);
 
             }
 
@@ -191,6 +200,9 @@ public class TextEditor {
                 // If we don't do this, they can still edit the content
                 InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editor.getWindowToken(), 0);
+
+                editButton.setVisibility(View.VISIBLE);
+                closeButton.setVisibility(View.VISIBLE);
             }
 
             @Override
