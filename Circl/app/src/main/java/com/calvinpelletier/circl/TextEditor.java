@@ -22,12 +22,21 @@ public class TextEditor {
     private EditText titleEditor;
     private EditText editor;
 
+    private Button editButton;
+    private Button closeButton;
+
+
     // The sidebar editor toggling buttons, to switch between editing windows
     private TextView content_sb;
     private TextView style_sb;
     private TextView settings_sb;
     private TextView delete_sb;
 
+    // The layouts for each of the four "modes"
+    private RelativeLayout contentLayout;
+    private RelativeLayout styleLayout;
+    private RelativeLayout settingsLayout;
+    private RelativeLayout deleteLayout;
 
     public TextEditor(MainActivity context)
     {
@@ -47,9 +56,18 @@ public class TextEditor {
         this.settings_sb = (TextView)context.findViewById(R.id.settings_sb);
         this.delete_sb = (TextView)context.findViewById(R.id.delete_sb);
 
+        this.contentLayout = (RelativeLayout)context.findViewById(R.id.contentLayout);
+        this.styleLayout = (RelativeLayout)context.findViewById(R.id.styleLayout);
+        this.settingsLayout = (RelativeLayout)context.findViewById(R.id.settingsLayout);
+        this.deleteLayout = (RelativeLayout)context.findViewById(R.id.deleteLayout);
+
         titleEditor.setText(textNode.title);
         editor.setText(textNode.content);
 
+        content_sb.setOnClickListener(displayContentEditor);
+        style_sb.setOnClickListener(displayStyleEditor);
+        settings_sb.setOnClickListener(displaySettingsEditor);
+        delete_sb.setOnClickListener(displayDeleteEditor);
 
         // On edit click, slide in - for now i'm just gonna do it
 
@@ -63,7 +81,50 @@ public class TextEditor {
                     slideInSideBar();
             }
         });
+
+        closeButton = (Button)context.findViewById(R.id.button7);
+        // At some point, we'll have an on click listener to close the editor.
     }
+
+    private View.OnClickListener displayContentEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.VISIBLE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displayStyleEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.VISIBLE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displaySettingsEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.VISIBLE);
+            deleteLayout.setVisibility(View.GONE);
+        }
+    };
+
+    private View.OnClickListener displayDeleteEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            contentLayout.setVisibility(View.GONE);
+            styleLayout.setVisibility(View.GONE);
+            settingsLayout.setVisibility(View.GONE);
+            deleteLayout.setVisibility(View.VISIBLE);
+        }
+    };
 
     private void makeEditable(EditText e)
     {
@@ -104,6 +165,8 @@ public class TextEditor {
 
                 makeEditable(titleEditor);
                 makeEditable(editor);
+                editButton.setVisibility(View.GONE);
+                closeButton.setVisibility(View.GONE);
 
             }
 
@@ -137,6 +200,9 @@ public class TextEditor {
                 // If we don't do this, they can still edit the content
                 InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editor.getWindowToken(), 0);
+
+                editButton.setVisibility(View.VISIBLE);
+                closeButton.setVisibility(View.VISIBLE);
             }
 
             @Override
