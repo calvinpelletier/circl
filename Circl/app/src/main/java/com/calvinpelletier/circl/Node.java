@@ -46,15 +46,4 @@ public class Node implements java.io.Serializable {
     {
         return this.radius;
     }
-
-    void OnMouseDown() {
-        this.hasBeenTapped = true;
-    }
-
-    void OnMouseUp() {
-        if (this.hasBeenTapped) {
-            System.out.println("test");
-        }
-        this.hasBeenTapped = false;
-    }
 }

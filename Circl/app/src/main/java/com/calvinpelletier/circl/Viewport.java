@@ -12,10 +12,13 @@ public class Viewport {
 
     private PalaceView palace; //palace is the entire canvas
 
+    private final double sameTouchLocationTolerance = 10.0;
+
     private Coord position = new Coord(0.f, 0.f); //viewport position relative to canvas
     private Coord touchStart = new Coord(0.f, 0.f);
     private Coord positionOld = new Coord(0.f, 0.f);
     private float scale = 1.f; //viewport scale (pinch and zoom)
+    private boolean placingNode = false;
 
     public Viewport(PalaceView palace) {
         this.palace = palace;
@@ -27,6 +30,10 @@ public class Viewport {
 
     public float getScale() {
         return scale;
+    }
+
+    public void setPlacingNode(boolean placingNode) {
+        this.placingNode = placingNode;
     }
 
     public Coord viewportToPalaceCoord(Coord viewportCoord) {
@@ -62,6 +69,18 @@ public class Viewport {
                         if (palace.nodeArray.get(i) == tappedNode) {
                             System.out.println("Tapped node at index: " + i);
                         }
+                    }
+                }
+                if (placingNode && tappedNode==null && (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance)) {
+                    boolean temp = true;
+                    for (int i = 0; i < palace.nodeArray.size(); i++) {
+                        if (distance(palace.nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < (palace.nodeArray.get(i).getRadius() * 2)+10) {
+                            temp = false;
+                        }
+                    }
+                    if (temp) {
+                        placingNode = false;
+                        palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
                     }
                 }
                 tappedNode = null;

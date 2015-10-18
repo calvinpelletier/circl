@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:id="@+id/pvContainer"></RelativeLayout>
+        android:id="@+id/pvContainer">
+
+    </RelativeLayout>
 
     <View
         android:background="@drawable/hamburger_menu"
@@ -18,6 +20,17 @@
         android:layout_alignParentRight="true"
         android:id="@+id/hamburgerMenu"
         android:layout_margin="10dp">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_to_place_node"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapToPlaceNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
 
     </View>
 

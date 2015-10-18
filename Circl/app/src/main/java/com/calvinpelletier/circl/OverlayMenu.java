@@ -48,9 +48,9 @@ public class OverlayMenu {
         bAddNode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(context,"Adding Node!",Toast.LENGTH_SHORT);
-                t.show();
-                fadeOut(context,container,view);
+                MainActivity temp = (MainActivity)context;
+                temp.getPalace().startAddNode();
+                fadeOut(context, container, view);
                 fadeOut(context,container,fadeView);
             }
         });
