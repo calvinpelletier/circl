@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:id="@+id/sideBar"
         android:background="@color/lightBlue"
-        android:visibility="gone">
+        android:visibility="visible">
 
             <Button
                 android:layout_width="40dp"
@@ -55,7 +55,8 @@
             android:textSize="22sp"
             android:layout_below="@+id/content_sb"
             android:padding="10sp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="match_parent"
@@ -153,46 +154,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/styleLayout"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/blue">
 
-        <EditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/styleTitle"
             android:text="@string/styleTitle"
+            android:id="@+id/styleTitle"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
             android:gravity="center_horizontal"
-            android:inputType="none" />
-
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/settingsLayout"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/blue">
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/settingsTitle"
             android:text="@string/settingsTitle"
+            android:id="@+id/settingsTitle"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-            android:inputType="none" />
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/deleteLayout"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/blue">
 
-        <EditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/deleteTitle"
-            android:gravity="center_horizontal"
             android:text="@string/deleteTitle"
-            android:inputType="none" />
+            android:id="@+id/deleteTitle"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deletePrompt"
+            android:id="@+id/deletePrompt"
+            android:layout_below="@+id/deleteTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:paddingLeft="50sp"
+            android:paddingRight="50sp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:background="@color/red" />
+
     </RelativeLayout>
 
 </LinearLayout>

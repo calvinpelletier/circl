@@ -31,9 +31,12 @@
         Settings
     </string>
     <string name = "deleteTitle">
-        Delete Node
+        Are You Sure You Want To Delete?
     </string>
     <string name = "contentTitle">
         Content
+    </string>
+    <string name = "deletePrompt">
+        Delete
     </string>
 </resources>
