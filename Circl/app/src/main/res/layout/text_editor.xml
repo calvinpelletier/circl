@@ -7,29 +7,27 @@
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:id="@+id/sideBar"
-        android:background="@color/lightBlue">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layouttop_sb">
+        android:background="@color/lightBlue"
+        android:visibility="gone">
 
             <Button
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:id="@+id/saveButton_sb"
-                android:layout_weight="0.5"
-                android:background="@drawable/check_icon"/>
+                android:background="@drawable/check_icon"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp" />
 
             <Button
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/discardButton_sb"
-                android:layout_weight="0.5"
-                android:background="@drawable/x_icon"/>
+                android:background="@drawable/x_icon"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp" />
 
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -41,7 +39,7 @@
             android:layout_alignParentTop="false"
             android:layout_alignParentBottom="false"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/layouttop_sb"
+            android:layout_below="@+id/saveButton_sb"
             android:layout_marginTop="15dp"
             android:textSize="22sp"
             android:padding="10sp"
@@ -104,7 +102,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/discardButton"
+                android:id="@+id/closeButton"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
