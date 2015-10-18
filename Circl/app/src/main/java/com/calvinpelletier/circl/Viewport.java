@@ -20,6 +20,7 @@ public class Viewport {
     private float scale = 1.f; //viewport scale (pinch and zoom)
     private boolean placingNode = false;
     private boolean creatingConnection = false;
+    private Node nodeHeldDown = null;
 
     public Viewport(PalaceView palace) {
         this.palace = palace;
@@ -35,6 +36,13 @@ public class Viewport {
 
     public void setPlacingNode(boolean placingNode) {
         this.placingNode = placingNode;
+    }
+
+    public void setNodeHeldDown() {
+        nodeHeldDown = tappedNode;
+    }
+    public Node getNodeHeldDown() {
+        return nodeHeldDown;
     }
 
     public void startAddConnection() {
@@ -66,16 +74,28 @@ public class Viewport {
                 touchStart.y = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                position.x = constrainX(touchStart.x - ev.getX() + positionOld.x);
-                position.y = constrainY(touchStart.y - ev.getY() + positionOld.y);
+                if (nodeHeldDown != null && nodeHeldDown == tappedNode) {
+                    if (!tooCloseToANode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())), nodeHeldDown)) {
+                        nodeHeldDown.setPosition(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
+                    }
+                } else {
+                    position.x = constrainX(touchStart.x - ev.getX() + positionOld.x);
+                    position.y = constrainY(touchStart.y - ev.getY() + positionOld.y);
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 //if the tap was released in the same place that it started
                 if (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance) {
-                    if (placingNode) {
+                    if (nodeHeldDown != null) {
                         if (tappedNode == null) {
-                            placingNode = false;
-                            palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
+                            nodeHeldDown = null;
+                        }
+                    } else if (placingNode) {
+                        if (tappedNode == null) {
+                            if (!tooCloseToANode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())), null)) {
+                                placingNode = false;
+                                palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
+                            }
                         }
                     } else if (creatingConnection) {
                         if (tappedNode != null) {
@@ -93,18 +113,6 @@ public class Viewport {
                         if (tappedNode != null) {
                             System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
                         }
-                    }
-                }
-                if (placingNode && tappedNode==null && (distance(touchStart, new Coord(ev.getX(), ev.getY())) < sameTouchLocationTolerance)) {
-                    boolean temp = true;
-                    for (int i = 0; i < palace.nodeArray.size(); i++) {
-                        if (distance(palace.nodeArray.get(i).getPosition(), new Coord(ev.getX(),ev.getY())) < (palace.nodeArray.get(i).getRadius() * 2)+10) {
-                            temp = false;
-                        }
-                    }
-                    if (temp) {
-                        placingNode = false;
-                        palace.addNode(viewportToPalaceCoord(new Coord(ev.getX(), ev.getY())));
                     }
                 }
                 tappedNode = null;
@@ -137,6 +145,16 @@ public class Viewport {
 
     private double distance(Coord coord1, Coord coord2) {
         return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
+    }
+
+    private boolean tooCloseToANode(Coord pos, Node ignore) {
+        boolean temp = false;
+        for (int i = 0; i < palace.nodeArray.size(); i++) {
+            if ((distance(palace.nodeArray.get(i).getPosition(), pos) < (palace.nodeArray.get(i).getRadius() * 2)+10) && (palace.nodeArray.get(i) != ignore)) {
+                temp = true;
+            }
+        }
+        return temp;
     }
     //~~~~~~
 }
