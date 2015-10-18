@@ -39,7 +39,7 @@ public class TextEditor {
         context.setContentView(R.layout.text_editor);
         this.sideBar = (RelativeLayout)context.findViewById(R.id.sideBar);
 
-        this.titleEditor = (EditText)context.findViewById(R.id.editText);
+        this.titleEditor = (EditText)context.findViewById(R.id.contentTitle);
         this.editor = (EditText)context.findViewById(R.id.editor);
 
         this.content_sb = (TextView)context.findViewById(R.id.content_sb);
@@ -53,7 +53,7 @@ public class TextEditor {
 
         // On edit click, slide in - for now i'm just gonna do it
 
-        Button editButton = (Button)context.findViewById(R.id.button6);
+        Button editButton = (Button)context.findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
