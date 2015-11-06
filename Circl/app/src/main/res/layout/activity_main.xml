@@ -56,4 +56,16 @@
 
     </View>
 
+    <View
+        android:background="@drawable/trash_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/trashIcon"
+        android:layout_margin="10dp"
+        android:visibility="gone">
+
+    </View>
+
 </RelativeLayout>
