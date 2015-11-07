@@ -197,11 +197,34 @@ public class PalaceView extends View {
     //detector for long presses
     final GestureDetector mLongPressDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
         public void onLongPress(MotionEvent ev) {
-            viewport.setNodeHeldDown();
+            if (viewport.inStandardMode()) {
+                viewport.setNodeHeldDown();
+                mainActivity.findViewById(R.id.trashIcon).setVisibility(View.VISIBLE);
+                mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
+            }
             invalidate();
         }
     });
     //~~~~~~
+
+    public void nodeNotHeldDown() {
+        mainActivity.findViewById(R.id.trashIcon).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
+        invalidate();
+    }
+
+    public void deleteSelectedNode() {
+        if (viewport.getNodeHeldDown() != null) {
+            nodeArray.remove(viewport.getNodeHeldDown());
+            for (int i = 0; i < connectionArray.size(); i++) {
+                if (connectionArray.get(i).getNodeA() == viewport.getNodeHeldDown() || connectionArray.get(i).getNodeB() == viewport.getNodeHeldDown()) {
+                    connectionArray.remove(i);
+                }
+            }
+            viewport.returnToStandardMode();
+            nodeNotHeldDown();
+        }
+    }
 
     //TODO: remove when user can add their own nodes. for debugging purposes only
     private void tempInitialization() {

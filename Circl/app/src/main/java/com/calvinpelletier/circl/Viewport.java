@@ -2,6 +2,7 @@ package com.calvinpelletier.circl;
 
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
 
 /**
  * Created by Calvin on 10/15/15.
@@ -43,6 +44,15 @@ public class Viewport {
     }
     public Node getNodeHeldDown() {
         return nodeHeldDown;
+    }
+
+    public boolean inStandardMode() {
+        return !placingNode && !creatingConnection && (nodeHeldDown == null);
+    }
+    public void returnToStandardMode() {
+        placingNode = false;
+        creatingConnection = false;
+        nodeHeldDown = null;
     }
 
     public void startAddConnection() {
@@ -89,6 +99,7 @@ public class Viewport {
                     if (nodeHeldDown != null) {
                         if (tappedNode == null) {
                             nodeHeldDown = null;
+                            palace.nodeNotHeldDown();
                         }
                     } else if (placingNode) {
                         if (tappedNode == null) {
