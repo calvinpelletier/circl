@@ -50,4 +50,8 @@ public class Node implements java.io.Serializable {
         return this.radius;
     }
 
+    public int getSqrRadius() {
+        return this.radius * this.radius;
+    }
+
 }
