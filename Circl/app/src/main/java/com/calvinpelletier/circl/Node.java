@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class Node implements java.io.Serializable {
 
-    private ArrayList<Connection> connectionArray = new ArrayList<Connection>();
     private int outlineColor = Color.BLACK;
     private Coord position;
     private static int STD_RADIUS = 50;
@@ -51,19 +50,4 @@ public class Node implements java.io.Serializable {
         return this.radius;
     }
 
-    public int getSqrRadius() {
-        return this.radius * this.radius;
-    }
-
-    public void setLargeRadius() {
-        this.radius = LARGE_RADIUS;
-    }
-
-    public void setSTDRadius() {
-        this.radius = STD_RADIUS;
-    }
-
-    public void onTap() {
-        //implemented in child classes
-    }
 }

@@ -1,9 +1,13 @@
 package com.calvinpelletier.circl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -12,13 +16,16 @@ import java.util.ArrayList;
 // The overarching view that will use a Canvas to display the "mind palace"
 public class PalaceView extends View {
 
+    private MainActivity mainActivity;
+
     private Viewport viewport; //viewport is what the user sees on their screen
 
-    public int width = 400;
-    public int height = 400;
+    public int width = 800;
+    public int height = 800;
 
-    // A bunch of constants for drawing nodes and connections
+    // A bunch of constants for drawing nodes, connections, and instructions
     private final int FILL_COLOR = Color.rgb(0,49,94);
+    private final int FILL_COLOR_DEEMPHASIZED = Color.rgb(215, 215, 215);
     private final float STROKE_WIDTH = 5.f;
     private final Paint nodePaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint nodePaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -27,12 +34,15 @@ public class PalaceView extends View {
     // Used for managing zoom
     private ScaleGestureDetector mScaleDetector;
 
-    //temporary storage for nodes
+    //temporary storage for nodes and connections
     public ArrayList<Node> nodeArray = new ArrayList<Node>();
+    public ArrayList<Connection> connectionArray = new ArrayList<Connection>();
 
     public PalaceView(Context context)
     {
         super(context);
+
+        mainActivity = (MainActivity) context;
 
         viewport = new Viewport(this);
 
@@ -53,6 +63,46 @@ public class PalaceView extends View {
         tempInitialization();
     }
 
+    //~~~MENU FUNCTIONS~~~
+    public void startAddNode() {
+        viewport.setPlacingNode(true);
+        mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.VISIBLE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
+    }
+    public void addNode(Coord pos) {
+        mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
+        nodeArray.add(new Node(pos, Color.BLACK));
+        invalidate();
+    }
+
+    public void startAddConnection() {
+        viewport.startAddConnection();
+        mainActivity.findViewById(R.id.tapFirstNode).setVisibility(View.VISIBLE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
+    }
+    public void startAddConnection2() {
+        mainActivity.findViewById(R.id.tapFirstNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.tapSecondNode).setVisibility(View.VISIBLE);
+    }
+    public void addConnection(Node node1, Node node2) {
+        mainActivity.findViewById(R.id.tapSecondNode).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
+        if (node1 == node2) {
+            return;
+        }
+        for (int i = 0; i < connectionArray.size(); i++) {
+            Node a = connectionArray.get(i).getNodeA();
+            Node b = connectionArray.get(i).getNodeB();
+            if ((a == node1 && b == node2) || (a == node2 && b == node1)) { //check that a connection doesn't already exist
+                return;
+            }
+        }
+        connectionArray.add(new Connection(node1, node2));
+        invalidate();
+    }
+    //~~~~~~
+
     //~~~DRAWING FUNCTIONS~~~
     private Canvas canvas;
     @Override
@@ -66,12 +116,28 @@ public class PalaceView extends View {
         for (int i = 0; i < nodeArray.size(); i++) {
             drawNode(canvas, nodeArray.get(i));
         }
+        for (int i = 0; i < connectionArray.size(); i++) {
+            drawConnection(canvas, connectionArray.get(i).getNodeA(), connectionArray.get(i).getNodeB());
+        }
+
+        if (viewport.getNodeHeldDown() != null) {
+            Bitmap moveIcon = BitmapFactory.decodeResource(getResources(), R.drawable.move_icon);
+            int size = (int)(viewport.getNodeHeldDown().getRadius() * 1.5);
+            Bitmap moveIconScaled = Bitmap.createScaledBitmap(moveIcon, size, size, true);
+            canvas.drawBitmap(moveIconScaled, viewport.getNodeHeldDown().getPosition().x - size / 2, viewport.getNodeHeldDown().getPosition().y - size / 2, null);
+        }
 
         canvas.restore();
     }
 
     private void drawNode(Canvas canvas,Node n)
     {
+        if (viewport.getNodeHeldDown() == null || viewport.getNodeHeldDown() == n) {
+            nodePaintFill.setColor(FILL_COLOR);
+        } else {
+            nodePaintFill.setColor(FILL_COLOR_DEEMPHASIZED);
+        }
+
         canvas.drawCircle(n.getPosition().x, n.getPosition().y, n.getRadius(), nodePaintFill);
 
         nodePaintStroke.setColor(n.getOutline());
@@ -113,10 +179,12 @@ public class PalaceView extends View {
     {
         viewport.onTouchEvent(ev); //viewport handles most of the interaction
         mScaleDetector.onTouchEvent(ev);
+        mLongPressDetector.onTouchEvent(ev);
         invalidate();
         return true;
     }
 
+    //~~~SPECIFIC GESTURE DETECTORS~~~
     // http://stackoverflow.com/questions/5216658/pinch-zoom-for-custom-view
     // this facilitates scaling the canvas when a user "pinches"
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -126,7 +194,37 @@ public class PalaceView extends View {
             return true;
         }
     }
+    //detector for long presses
+    final GestureDetector mLongPressDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+        public void onLongPress(MotionEvent ev) {
+            if (viewport.inStandardMode()) {
+                viewport.setNodeHeldDown();
+                mainActivity.findViewById(R.id.trashIcon).setVisibility(View.VISIBLE);
+                mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.GONE);
+            }
+            invalidate();
+        }
+    });
     //~~~~~~
+
+    public void nodeNotHeldDown() {
+        mainActivity.findViewById(R.id.trashIcon).setVisibility(View.GONE);
+        mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
+        invalidate();
+    }
+
+    public void deleteSelectedNode() {
+        if (viewport.getNodeHeldDown() != null) {
+            nodeArray.remove(viewport.getNodeHeldDown());
+            for (int i = 0; i < connectionArray.size(); i++) {
+                if (connectionArray.get(i).getNodeA() == viewport.getNodeHeldDown() || connectionArray.get(i).getNodeB() == viewport.getNodeHeldDown()) {
+                    connectionArray.remove(i);
+                }
+            }
+            viewport.returnToStandardMode();
+            nodeNotHeldDown();
+        }
+    }
 
     //TODO: remove when user can add their own nodes. for debugging purposes only
     private void tempInitialization() {

@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:id="@+id/pvContainer"></RelativeLayout>
+        android:id="@+id/pvContainer">
+
+    </RelativeLayout>
 
     <View
         android:background="@drawable/hamburger_menu"
@@ -18,6 +20,51 @@
         android:layout_alignParentRight="true"
         android:id="@+id/hamburgerMenu"
         android:layout_margin="10dp">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_to_place_node"
+        android:layout_width="247dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapToPlaceNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_first_node"
+        android:layout_width="192dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapFirstNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
+
+    </View>
+
+    <View
+        android:background="@drawable/tap_second_node"
+        android:layout_width="238dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tapSecondNode"
+        android:layout_margin="20dp"
+        android:visibility="gone">
+
+    </View>
+
+    <View
+        android:background="@drawable/trash_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/trashIcon"
+        android:layout_margin="10dp"
+        android:visibility="gone">
 
     </View>
 
