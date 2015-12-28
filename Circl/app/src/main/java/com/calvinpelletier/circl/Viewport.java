@@ -75,9 +75,9 @@ public class Viewport {
     public void onTouchEvent(MotionEvent ev) {
         switch(ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                for (int i = 0; i < palace.nodeArray.size(); i++) {
-                    if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getSqrRadius()) {
-                        tappedNode = palace.nodeArray.get(i);
+                for (Node node : palace.nodeArray) {
+                    if (distance(node.getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < node.getSqrRadius()) {
+                        tappedNode = node;
                     }
                 }
                 touchStart.x = ev.getX();
@@ -160,8 +160,8 @@ public class Viewport {
 
     private boolean tooCloseToANode(Coord pos, Node ignore) {
         boolean temp = false;
-        for (int i = 0; i < palace.nodeArray.size(); i++) {
-            if ((distance(palace.nodeArray.get(i).getPosition(), pos) < (palace.nodeArray.get(i).getRadius() * 2)+10) && (palace.nodeArray.get(i) != ignore)) {
+        for (Node node : palace.nodeArray) {
+            if ((distance(node.getPosition(), pos) < ((node.getRadius() * 2)+10) * ((node.getRadius() * 2)+10)) && (node != ignore)) {
                 temp = true;
             }
         }

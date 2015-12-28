@@ -17,10 +17,12 @@ public class Node implements java.io.Serializable {
     private static int STD_RADIUS = 50;
     private static int LARGE_RADIUS = 250;
     private int radius = STD_RADIUS;
+    private PalaceView palace;
 
-    public Node(Coord position, int outlineColor) {
+    public Node(Coord position, int outlineColor, PalaceView palace) {
         this.position = position;
         this.outlineColor = outlineColor;
+        this.palace = palace;
     }
 
     public Coord getPosition() {
@@ -52,6 +54,18 @@ public class Node implements java.io.Serializable {
 
     public int getSqrRadius() {
         return this.radius * this.radius;
+    }
+
+    public void setLargeRadius() {
+        this.radius = LARGE_RADIUS;
+    }
+
+    public void setStdRadius() {
+        this.radius = STD_RADIUS;
+    }
+
+    public PalaceView getPalace() {
+        return palace;
     }
 
 }

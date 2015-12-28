@@ -10,14 +10,14 @@ public class TextNode extends Node {
     public String title = "";
     public String content = "";
 
-    public TextNode(Coord position, int outlineColor, String title, String content) {
-        super(position, outlineColor);
+    public TextNode(Coord position, int outlineColor, PalaceView palace, String title, String content) {
+        super(position, outlineColor, palace);
         this.title = title;
         this.content = content;
     }
 
     public void onTap() {
-        TextEditor editor = new TextEditor((MainActivity)palace.getContext());
+        TextEditor editor = new TextEditor((MainActivity)getPalace().getContext());
         editor.open(this,true);
     }
 }

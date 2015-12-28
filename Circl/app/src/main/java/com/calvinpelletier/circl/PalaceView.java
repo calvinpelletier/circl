@@ -72,7 +72,7 @@ public class PalaceView extends View {
     public void addNode(Coord pos) {
         mainActivity.findViewById(R.id.tapToPlaceNode).setVisibility(View.GONE);
         mainActivity.findViewById(R.id.hamburgerMenu).setVisibility(View.VISIBLE);
-        nodeArray.add(new Node(pos, Color.BLACK));
+        nodeArray.add(new Node(pos, Color.BLACK, this));
         invalidate();
     }
 
@@ -228,10 +228,10 @@ public class PalaceView extends View {
 
     //TODO: remove when user can add their own nodes. for debugging purposes only
     private void tempInitialization() {
-        Node n1 = new Node(new Coord(100,100), Color.YELLOW);
-        Node n2 = new Node(new Coord(490,120), Color.GREEN);
-        Node n3 = new Node(new Coord(400,500), Color.MAGENTA);
-        Node n4 = new Node(new Coord(200,300), Color.RED);
+        Node n1 = new Node(new Coord(100,100), Color.YELLOW, this);
+        Node n2 = new Node(new Coord(490,120), Color.GREEN, this);
+        Node n3 = new ParentNode(new Coord(400,500), Color.MAGENTA, this);
+        Node n4 = new Node(new Coord(200,300), Color.RED, this);
         nodeArray.add(n1);
         nodeArray.add(n2);
         nodeArray.add(n3);
