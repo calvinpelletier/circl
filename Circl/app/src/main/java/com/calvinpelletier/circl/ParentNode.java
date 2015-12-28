@@ -8,9 +8,16 @@ import java.util.ArrayList;
 public class ParentNode extends Node {
 
     private ArrayList<Node> children = new ArrayList<Node>();
+    private boolean expandedView = false;
 
     public ParentNode(Coord position, int outlineColor) {
         super(position, outlineColor);
         this.setLargeRadius();
+    }
+
+    public void onTap() {
+        if (expandedView) {
+
+        }
     }
 }

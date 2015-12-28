@@ -45,7 +45,7 @@ public class Viewport {
         switch(ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 for (int i = 0; i < palace.nodeArray.size(); i++) {
-                    if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getRadius()) {
+                    if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getSqrRadius()) {
                         tappedNode = palace.nodeArray.get(i);
                     }
                 }
@@ -60,10 +60,7 @@ public class Viewport {
                 for (int i = 0; i < palace.nodeArray.size(); i++) {
                     if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getRadius()) {
                         if (palace.nodeArray.get(i) == tappedNode) {
-                            System.out.println("Tapped node at index: " + i);
-                            TextEditor editor = new TextEditor((MainActivity)palace.getContext());
-                            TextNode thisNode = new TextNode(tappedNode.getPosition(),tappedNode.getOutline(),"","");
-                            editor.open(thisNode,true);
+                            tappedNode.onTap();
                         }
                     }
                 }
@@ -96,7 +93,7 @@ public class Viewport {
     }
 
     private double distance(Coord coord1, Coord coord2) {
-        return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
+        return Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2);
     }
     //~~~~~~
 }

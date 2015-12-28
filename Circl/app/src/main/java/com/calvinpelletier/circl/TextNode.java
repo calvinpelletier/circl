@@ -16,4 +16,8 @@ public class TextNode extends Node {
         this.content = content;
     }
 
+    public void onTap() {
+        TextEditor editor = new TextEditor((MainActivity)palace.getContext());
+        editor.open(this,true);
+    }
 }

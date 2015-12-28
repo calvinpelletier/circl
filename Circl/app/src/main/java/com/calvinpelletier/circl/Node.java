@@ -7,13 +7,17 @@ import java.util.ArrayList;
 /**
  * Created by Calvin Pelletier on 9/26/15.
  */
+
+
+
 public class Node implements java.io.Serializable {
 
     private ArrayList<Connection> connectionArray = new ArrayList<Connection>();
     private int outlineColor = Color.BLACK;
     private Coord position;
-    private final int radius = 50;
-    private boolean hasBeenTapped = false;
+    private static int STD_RADIUS = 50;
+    private static int LARGE_RADIUS = 250;
+    private int radius = STD_RADIUS;
 
     public Node(Coord position, int outlineColor) {
         this.position = position;
@@ -47,14 +51,19 @@ public class Node implements java.io.Serializable {
         return this.radius;
     }
 
-    void OnMouseDown() {
-        this.hasBeenTapped = true;
+    public int getSqrRadius() {
+        return this.radius * this.radius;
     }
 
-    void OnMouseUp() {
-        if (this.hasBeenTapped) {
-            System.out.println("test");
-        }
-        this.hasBeenTapped = false;
+    public void setLargeRadius() {
+        this.radius = LARGE_RADIUS;
+    }
+
+    public void setSTDRadius() {
+        this.radius = STD_RADIUS;
+    }
+
+    public void onTap() {
+        //implemented in child classes
     }
 }
