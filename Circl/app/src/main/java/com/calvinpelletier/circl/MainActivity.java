@@ -41,6 +41,14 @@ public class MainActivity extends ActionBarActivity {
                 OverlayMenu.fadeIn(m,mainLayout);
             }
         });
+
+        View trash = findViewById(R.id.trashIcon);
+        trash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                palace.deleteSelectedNode();
+            }
+        });
     }
 
     @Override
