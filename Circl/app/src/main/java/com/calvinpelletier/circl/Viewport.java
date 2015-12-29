@@ -75,9 +75,12 @@ public class Viewport {
     public void onTouchEvent(MotionEvent ev) {
         switch(ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                for (int i = 0; i < palace.nodeArray.size(); i++) {
-                    if (distance(palace.nodeArray.get(i).getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < palace.nodeArray.get(i).getRadius()) {
-                        tappedNode = palace.nodeArray.get(i);
+                for (Node node : palace.nodeArray) {
+                    if (node.getHidden()) {
+                        continue;
+                    }
+                    if (distance(node.getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < node.getSqrRadius()) {
+                        tappedNode = node;
                     }
                 }
                 touchStart.x = ev.getX();
@@ -122,7 +125,7 @@ public class Viewport {
                         }
                     } else {
                         if (tappedNode != null) {
-                            System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
+                            tappedNode.onTap();
                         }
                     }
                 }
@@ -155,13 +158,13 @@ public class Viewport {
     }
 
     private double distance(Coord coord1, Coord coord2) {
-        return Math.sqrt(Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2));
+        return Math.pow(coord1.x - coord2.x, 2) + Math.pow(coord1.y - coord2.y, 2);
     }
 
     private boolean tooCloseToANode(Coord pos, Node ignore) {
         boolean temp = false;
-        for (int i = 0; i < palace.nodeArray.size(); i++) {
-            if ((distance(palace.nodeArray.get(i).getPosition(), pos) < (palace.nodeArray.get(i).getRadius() * 2)+10) && (palace.nodeArray.get(i) != ignore)) {
+        for (Node node : palace.nodeArray) {
+            if ((distance(node.getPosition(), pos) < ((node.getRadius() * 2)+10) * ((node.getRadius() * 2)+10)) && (node != ignore)) {
                 temp = true;
             }
         }

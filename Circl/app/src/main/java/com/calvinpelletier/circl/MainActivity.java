@@ -23,6 +23,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
+
+    public void init()
+    {
         setContentView(R.layout.activity_main);
 
         final RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
