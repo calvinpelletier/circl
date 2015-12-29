@@ -76,6 +76,9 @@ public class Viewport {
         switch(ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 for (Node node : palace.nodeArray) {
+                    if (node.getHidden()) {
+                        continue;
+                    }
                     if (distance(node.getPosition(), viewportToPalaceCoord(new Coord(ev.getX(),ev.getY()))) < node.getSqrRadius()) {
                         tappedNode = node;
                     }
@@ -122,7 +125,7 @@ public class Viewport {
                         }
                     } else {
                         if (tappedNode != null) {
-                            System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
+                            tappedNode.onTap();
                         }
                     }
                 }

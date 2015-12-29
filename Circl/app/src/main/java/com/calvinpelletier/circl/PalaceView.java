@@ -91,14 +91,22 @@ public class PalaceView extends View {
         if (node1 == node2) {
             return;
         }
-        for (int i = 0; i < connectionArray.size(); i++) {
-            Node a = connectionArray.get(i).getNodeA();
-            Node b = connectionArray.get(i).getNodeB();
+        for (Connection connection : connectionArray) {
+            Node a = connection.getNodeA();
+            Node b = connection.getNodeB();
             if ((a == node1 && b == node2) || (a == node2 && b == node1)) { //check that a connection doesn't already exist
                 return;
             }
         }
         connectionArray.add(new Connection(node1, node2));
+        if (node1.getClass() == ParentNode.class && node2.getClass() != ParentNode.class) {
+            ParentNode temp = (ParentNode) node1;
+            temp.addChild(node2);
+        }
+        if (node1.getClass() != ParentNode.class && node2.getClass() == ParentNode.class) {
+            ParentNode temp = (ParentNode) node2;
+            temp.addChild(node1);
+        }
         invalidate();
     }
     //~~~~~~
@@ -132,6 +140,10 @@ public class PalaceView extends View {
 
     private void drawNode(Canvas canvas,Node n)
     {
+        if (n.getHidden()) {
+            return;
+        }
+
         if (viewport.getNodeHeldDown() == null || viewport.getNodeHeldDown() == n) {
             nodePaintFill.setColor(FILL_COLOR);
         } else {
@@ -146,6 +158,10 @@ public class PalaceView extends View {
 
     private void drawConnection(Canvas canvas,Node n1,Node n2)
     {
+        if (n1.getHidden() || n2.getHidden()) {
+            return;
+        }
+
         float x1 = n1.getPosition().x;
         float y1 = n1.getPosition().y;
         float x2 = n2.getPosition().x;

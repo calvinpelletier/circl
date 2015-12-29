@@ -15,9 +15,9 @@ public class Node implements java.io.Serializable {
     private int outlineColor = Color.BLACK;
     private Coord position;
     private static int STD_RADIUS = 50;
-    private static int LARGE_RADIUS = 250;
     private int radius = STD_RADIUS;
     private PalaceView palace;
+    private boolean hidden = false;
 
     public Node(Coord position, int outlineColor, PalaceView palace) {
         this.position = position;
@@ -56,16 +56,23 @@ public class Node implements java.io.Serializable {
         return this.radius * this.radius;
     }
 
-    public void setLargeRadius() {
-        this.radius = LARGE_RADIUS;
-    }
-
-    public void setStdRadius() {
-        this.radius = STD_RADIUS;
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public PalaceView getPalace() {
         return palace;
     }
+
+    public boolean getHidden() {
+        return this.hidden;
+    }
+
+    public void setHidden(boolean value) {
+        this.hidden = value;
+    }
+
+    //TODO: remove this when users can't place a generic node
+    public void onTap() {}
 
 }
