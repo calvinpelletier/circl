@@ -123,6 +123,10 @@ public class Viewport {
                     } else {
                         if (tappedNode != null) {
                             System.out.println("Tapped node: " + tappedNode); //TODO: change this when we can open nodes
+                            TextEditor editor = new TextEditor((MainActivity)palace.getContext());
+
+                            TextNode temp = new TextNode(tappedNode.getPosition(),tappedNode.getOutline(),"","");
+                            editor.open(temp,true);
                         }
                     }
                 }

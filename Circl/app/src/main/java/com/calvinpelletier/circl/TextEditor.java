@@ -26,7 +26,6 @@ public class TextEditor {
     private Button closeButton;
 
     // The sidebar editor toggling buttons, to switch between editing windows
-    private TextView content_sb;
     private TextView style_sb;
     private TextView settings_sb;
     private TextView delete_sb;
@@ -58,36 +57,25 @@ public class TextEditor {
         this.titleEditor = (EditText)context.findViewById(R.id.contentTitle);
         this.editor = (EditText)context.findViewById(R.id.editor);
 
-        this.content_sb = (TextView)context.findViewById(R.id.content_sb);
         this.style_sb = (TextView)context.findViewById(R.id.style_sb);
         this.settings_sb = (TextView)context.findViewById(R.id.settings_sb);
         this.delete_sb = (TextView)context.findViewById(R.id.delete_sb);
 
-        layoutModeButtons = new TextView[4];
-        layoutModeButtons[0] = content_sb;
-        layoutModeButtons[1] = style_sb;
-        layoutModeButtons[2] = settings_sb;
-        layoutModeButtons[3] = delete_sb;
+        layoutModeButtons = new TextView[3];
+        layoutModeButtons[0] = style_sb;
+        layoutModeButtons[1] = settings_sb;
+        layoutModeButtons[2] = delete_sb;
 
         this.contentLayout = (RelativeLayout)context.findViewById(R.id.contentLayout);
         this.styleLayout = (RelativeLayout)context.findViewById(R.id.styleLayout);
         this.settingsLayout = (RelativeLayout)context.findViewById(R.id.settingsLayout);
         this.deleteLayout = (RelativeLayout)context.findViewById(R.id.deleteLayout);
 
-        layoutModes = new RelativeLayout[4];
+        layoutModes = new RelativeLayout[3];
 
-        layoutModes[0] = contentLayout;
-        layoutModes[1] = styleLayout;
-        layoutModes[2] = settingsLayout;
-        layoutModes[3] = deleteLayout;
-
-
-        content_sb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayLayout(0);
-            }
-        });
+        layoutModes[0] = styleLayout;
+        layoutModes[1] = settingsLayout;
+        layoutModes[2] = deleteLayout;
 
         style_sb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +153,7 @@ public class TextEditor {
 
     private void displayLayout(int layoutIdx)
     {
-        for(int i = 0;i < 4;i++)
+        for(int i = 0;i < 3;i++)
         {
             RelativeLayout currLayout = layoutModes[i];
             TextView currToggleButton = layoutModeButtons[i];
