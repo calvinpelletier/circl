@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class Node implements java.io.Serializable {
 
-    private ArrayList<Connection> connectionArray = new ArrayList<Connection>();
     private int outlineColor = Color.BLACK;
     private Coord position;
     private final int radius = 50;
@@ -45,16 +44,5 @@ public class Node implements java.io.Serializable {
     public int getRadius()
     {
         return this.radius;
-    }
-
-    void OnMouseDown() {
-        this.hasBeenTapped = true;
-    }
-
-    void OnMouseUp() {
-        if (this.hasBeenTapped) {
-            System.out.println("test");
-        }
-        this.hasBeenTapped = false;
     }
 }

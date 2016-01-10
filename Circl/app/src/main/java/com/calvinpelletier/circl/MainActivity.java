@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends ActionBarActivity {
 
+    private PalaceView palace;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +32,9 @@ public class MainActivity extends ActionBarActivity {
 
         final RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainLayout);
         final RelativeLayout pvContainer = (RelativeLayout)findViewById(R.id.pvContainer);
-        PalaceView p = new PalaceView(this);
+        palace = new PalaceView(this);
 
-        pvContainer.addView(p);
+        pvContainer.addView(palace);
 
         final MainActivity m = this;
 
@@ -44,8 +46,15 @@ public class MainActivity extends ActionBarActivity {
                 OverlayMenu.fadeIn(m,mainLayout);
             }
         });
-    }
 
+        View trash = findViewById(R.id.trashIcon);
+        trash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                palace.deleteSelectedNode();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,5 +76,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public PalaceView getPalace() {
+        return palace;
     }
 }
